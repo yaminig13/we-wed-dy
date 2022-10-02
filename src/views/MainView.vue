@@ -119,7 +119,7 @@ export default {
   }
 
   &.large-wrapper {
-    padding-top: 5rem;
+    padding-top: 2.5rem;
     @media (min-width:480px) {
       margin-top: -1.5rem;
       padding-top: 0;
