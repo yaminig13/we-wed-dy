@@ -71,6 +71,9 @@ export default {
             font-size:xx-large;
             color: orange;
             cursor: pointer;
+            @media (max-width:480px) {
+                color:beige;
+            }
         }
       }
     }
