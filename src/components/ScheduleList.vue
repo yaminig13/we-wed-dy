@@ -78,7 +78,7 @@
             </button>
         </div>
         <div class="back">
-            <i class="fas fa-chevron-circle-left text-red" @click="$emit('emitChange','main')"></i>
+            <i class="fa fa-arrow-circle-o-left" @click="$emit('emitChange','main')"></i>
         </div>  
     </div>
   </div>
