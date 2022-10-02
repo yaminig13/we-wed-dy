@@ -2,6 +2,8 @@
     "name":"D&Y",
     "short_name":"D&Y",
     "theme_color":"#000000",
+    "appleMobileWebAppCapable": "yes",
+    "appleMobileWebAppStatusBarStyle": "black",
     "icons":[
         {
             "src":"./img/icons/android-chrome-192x192.png",
