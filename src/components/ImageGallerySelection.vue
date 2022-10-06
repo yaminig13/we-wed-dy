@@ -2,14 +2,21 @@
   <div class="main-body__gallery-tabs">
         <ul>
           <li>
-            <a :href=url>
-              <Button-Comp button-type="main-body__tabs--A" buttonText="Download / View" />
+            <a :href=downloadUrl>
+              <Button-Comp button-type="main-body__tabs--A" buttonText="Photos from Photographer" />
             </a>
           </li>
           <li v-if="linkValue!=='engagement'">
-            <Button-Comp button-type="main-body__tabs--B" buttonText="Upload" />
+            <a :href=downloadGuestUrl>
+              <Button-Comp button-type="main-body__tabs--B" buttonText="Photos from Guests" />
+            </a>
           </li>
-          
+
+          <li v-if="linkValue!=='engagement'">
+            <a :href=uploadGuestUrl>
+              <Button-Comp button-type="main-body__tabs--C" buttonText="Upload" />
+            </a>
+          </li>
           <li class="back">
             <i class="fa fa-arrow-circle-o-left" @click="$emit('emitChange','gallery')"></i>
           </li>
@@ -27,12 +34,39 @@ export default {
   },
   data () {
     return {
-      url: String
+      uploadGuestUrl: String,
+      downloadGuestUrl: String,
+      donwloadUrl: String
     }
   },
   mounted() {
     if (this.linkValue=="engagement") {
-      this.url="https://photos.app.goo.gl/9vMPMxzu68A7h4i58";
+      this.downloadUrl="https://photos.app.goo.gl/9vMPMxzu68A7h4i58";
+    }
+    if (this.linkValue=="haldi") {
+      this.downloadUrl="https://photos.app.goo.gl/PPW4PxDAykQ2fDfy9";
+      this.uploadGuestUrl="https://dhruvyamini.quickconnect.to/mo/request/vbTsYV0cg";
+      this.downloadGuestUrl="https://dhruvyamini.quickconnect.to/mo/sharing/SODCY7lDJ"
+    }
+    if (this.linkValue=="mehendi") {
+      this.downloadUrl="https://photos.app.goo.gl/CvYJ5H8s58LihvPH9";
+      this.uploadGuestUrl="https://dhruvyamini.quickconnect.to/mo/request/xxO0RoFfu";
+      this.downloadGuestUrl="https://dhruvyamini.quickconnect.to/mo/sharing/kYDLD8lHi"
+    }
+    if (this.linkValue=="sangeet") {
+      this.downloadUrl="https://photos.app.goo.gl/jGonE48y4Xy3rLzo6";
+      this.uploadGuestUrl="https://dhruvyamini.quickconnect.to/mo/request/o2KF2g8mv";
+      this.downloadGuestUrl="https://dhruvyamini.quickconnect.to/mo/sharing/e6eMKNjDm"
+    }
+    if (this.linkValue=="wedding") {
+      this.downloadUrl="https://photos.app.goo.gl/CSkpmwErZWMXKznx5";
+      this.uploadGuestUrl="https://dhruvyamini.quickconnect.to/mo/request/OQtQvL1Fr";
+      this.downloadGuestUrl="https://dhruvyamini.quickconnect.to/mo/sharing/mk39vYuhN"
+    }
+    if (this.linkValue=="other") {
+      this.downloadUrl="https://photos.app.goo.gl/MZf93LNkFNpz9AAh7";
+      this.uploadGuestUrl="https://dhruvyamini.quickconnect.to/mo/request/xxO0RoFfu";
+      this.downloadGuestUrl="https://dhruvyamini.quickconnect.to/mo/sharing/kYDLD8lHi"
     }
   },
   props: {

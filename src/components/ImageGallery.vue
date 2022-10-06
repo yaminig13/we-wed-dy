@@ -5,20 +5,21 @@
             <Button-Comp button-type="main-body__tabs--A" buttonText="Engagement" @click="$emit('emitChange','gallery-selection','engagement')"/>
           </li>
           <li>
-            <Button-Comp button-type="main-body__tabs--B" buttonText="Haldi" @click="$emit('emitChange','gallery-selection')"/>
+            <Button-Comp button-type="main-body__tabs--B" buttonText="Haldi" @click="$emit('emitChange','gallery-selection','haldi')"/>
           </li>
           <li>
-            <Button-Comp button-type="main-body__tabs--C" buttonText="Mehendi" @click="$emit('emitChange','gallery-selection')"/>
+            <Button-Comp button-type="main-body__tabs--C" buttonText="Mehendi" @click="$emit('emitChange','gallery-selection','mehendi')"/>
           </li>
           <li>
-            <Button-Comp button-type="main-body__tabs--D" buttonText="Sangeet" @click="$emit('emitChange','gallery-selection')"/>
+            <Button-Comp button-type="main-body__tabs--D" buttonText="Sangeet" @click="$emit('emitChange','gallery-selection','sangeet')"/>
           </li>
           <li>
-            <Button-Comp button-type="main-body__tabs--E" buttonText="Reception" @click="$emit('emitChange','gallery-selection')"/>
+            <Button-Comp button-type="main-body__tabs--F" buttonText="Wedding" @click="$emit('emitChange','gallery-selection','wedding')"/>
           </li>
           <li>
-            <Button-Comp button-type="main-body__tabs--F" buttonText="Wedding" @click="$emit('emitChange','gallery-selection')"/>
+            <Button-Comp button-type="main-body__tabs--E" buttonText="Other Functions" @click="$emit('emitChange','gallery-selection','other')"/>
           </li>
+        
           
           <li class="back">
             <i class="fa fa-arrow-circle-o-left" @click="$emit('emitChange','main')"></i>
