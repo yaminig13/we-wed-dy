@@ -2,39 +2,42 @@
   <div class="main-body__gallery-tabs">
         <ul>
           <li>
-            <Button-Comp button-type="main-body__tabs--A" buttonText="Engagement" @click="$emit('emitChange','gallery-selection','engagement')"/>
+            <a :href=url>
+              <Button-Comp button-type="main-body__tabs--A" buttonText="Download / View" />
+            </a>
           </li>
-          <li>
-            <Button-Comp button-type="main-body__tabs--B" buttonText="Haldi" @click="$emit('emitChange','gallery-selection')"/>
-          </li>
-          <li>
-            <Button-Comp button-type="main-body__tabs--C" buttonText="Mehendi" @click="$emit('emitChange','gallery-selection')"/>
-          </li>
-          <li>
-            <Button-Comp button-type="main-body__tabs--D" buttonText="Sangeet" @click="$emit('emitChange','gallery-selection')"/>
-          </li>
-          <li>
-            <Button-Comp button-type="main-body__tabs--E" buttonText="Reception" @click="$emit('emitChange','gallery-selection')"/>
-          </li>
-          <li>
-            <Button-Comp button-type="main-body__tabs--F" buttonText="Wedding" @click="$emit('emitChange','gallery-selection')"/>
+          <li v-if="linkValue!=='engagement'">
+            <Button-Comp button-type="main-body__tabs--B" buttonText="Upload" />
           </li>
           
           <li class="back">
-            <i class="fa fa-arrow-circle-o-left" @click="$emit('emitChange','main')"></i>
+            <i class="fa fa-arrow-circle-o-left" @click="$emit('emitChange','gallery')"></i>
           </li>
         </ul>
       </div>
 </template>
 
 <script>
-import ButtonComp from "../components/ButtonComp.vue";
+import ButtonComp from "./ButtonComp.vue";
 
 export default {
-  name: "ImageGallery",
+  name: "ImageGallerySelection",
   components: {
     ButtonComp
-}
+  },
+  data () {
+    return {
+      url: String
+    }
+  },
+  mounted() {
+    if (this.linkValue=="engagement") {
+      this.url="https://photos.app.goo.gl/9vMPMxzu68A7h4i58";
+    }
+  },
+  props: {
+    linkValue: String
+  }
 };
 </script>
 <style lang="less">

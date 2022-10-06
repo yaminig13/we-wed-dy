@@ -34,7 +34,7 @@ export default {
 
 body {
   margin: 0px; 
-  background: url("assets/bg.JPG") no-repeat center center fixed;
+  background: url("assets/bg_reduced.jpg") no-repeat center center fixed;
   background-size: cover; 
 }
 
@@ -42,7 +42,7 @@ body {
   background: linear-gradient(
       rgba(0,0, 0, 1), 
       rgba(250, 190, 88,0.85);
-    ), url("assets/bg.JPG") no-repeat center center fixed;
+    ), url("assets/bg_reduced.jpg") no-repeat center center fixed;
       background-size: cover; 
 
 }

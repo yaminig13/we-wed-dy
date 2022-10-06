@@ -28,6 +28,9 @@
 
       <Schedule-List v-if="isScheduleView" @emitChange="changeView"></Schedule-List>
 
+      <image-gallery-selection v-if="isGallerySelectionView" @emitChange="changeView" :linkValue="linkValue"/>
+
+
     </div>
   </div>
 </template>
@@ -37,6 +40,7 @@ import ButtonComp from "../components/ButtonComp.vue";
 import { atcb_init } from "add-to-calendar-button";
 import "add-to-calendar-button/assets/css/atcb.css";
 import ImageGallery from "../components/ImageGallery.vue";
+import ImageGallerySelection from "../components/ImageGallerySelection.vue";
 import ScheduleList from "@/components/ScheduleList.vue";
 
 export default {
@@ -44,14 +48,17 @@ export default {
   components: {
     ButtonComp,
     ImageGallery,
-    ScheduleList
+    ScheduleList,
+    ImageGallerySelection
   },
   data() {
     return {
       isGalleryView: false,
       isMainView:true,
       isScheduleView:false,
-      eventData: {}
+      isGallerySelectionView:false,
+      eventData: {},
+      linkValue: ''
     }
   },
   mounted() {
@@ -77,10 +84,15 @@ export default {
     });
   },
   methods:{
-    changeView(view) {
+    changeView(view,button) {
       this.isMainView=false;
       this.isGalleryView=false;
       this.isScheduleView=false;
+      this.isGallerySelectionView=false;
+      if(view=="gallery-selection") {
+        this.isGallerySelectionView=true;
+        this.linkValue=button;
+      }
       if(view=="schedule"){
         this.isScheduleView=true;
       }
