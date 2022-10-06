@@ -1,4 +1,5 @@
 <template>
+  <notifications position="bottom center" classes="alert"/>
   <Main-Header></Main-Header>
   <router-view></router-view>
 </template>
@@ -44,20 +45,19 @@ body {
       rgba(250, 190, 88,0.85);
     ), url("assets/bg_reduced.jpg") no-repeat center center fixed;
       background-size: cover; 
-
 }
-// body::before { 
-//   content: ""; 
-//   background: url("assets/bg.JPG") no-repeat center center fixed; 
-//   background-size: cover; 
-//   background-color: black; 
-//   position: absolute; 
-//   top: 0px; 
-//   right: 0px; 
-//   bottom: 0px; 
-//   left: 0px;
 
-// }
+.vue-notification-group {
+  // bottom: 2rem !important;
+  // padding: 1rem;
+
+  .vue-notification-template {
+    background: orange;
+    color: black;
+    border-left: 5px solid black;
+    padding: 1rem;
+  }
+}
 
 #app {
   // font-family: Avenir, Helvetica, Arial, sans-serif;

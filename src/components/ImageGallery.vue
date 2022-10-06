@@ -69,11 +69,14 @@ export default {
           }
         }
         i {
-            font-size:xx-large;
+            font-size: xx-large;
             color: orange;
             cursor: pointer;
             @media (max-width:480px) {
-                color:beige;
+              position: absolute;
+              font-size: xxx-large;
+              bottom: 5rem;
+              right: 3rem;
             }
         }
       }

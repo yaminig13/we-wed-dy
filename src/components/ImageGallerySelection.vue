@@ -26,11 +26,13 @@
 
 <script>
 import ButtonComp from "./ButtonComp.vue";
+// import Notifications from '@kyvg/vue3-notification'
 
 export default {
   name: "ImageGallerySelection",
   components: {
-    ButtonComp
+    ButtonComp,
+    // Notifications
   },
   data () {
     return {
@@ -40,6 +42,11 @@ export default {
     }
   },
   mounted() {
+    this.$notify({
+      // title: "We want to share as many moments as possible!",
+      text: "You can upload photos clicked by your personal device by clicking on 'Upload' button. Photos from other guests and from a professional can be downloaded by clicking on respective buttons.",
+      duration: 30000
+    });
     if (this.linkValue=="engagement") {
       this.downloadUrl="https://photos.app.goo.gl/9vMPMxzu68A7h4i58";
     }
@@ -109,7 +116,10 @@ export default {
             color: orange;
             cursor: pointer;
             @media (max-width:480px) {
-                color:beige;
+              position: absolute;
+              font-size: xxx-large;
+              bottom: 5rem;
+              right: 3rem;
             }
         }
       }

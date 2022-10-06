@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@chenfengyuan/vue-carousel": "^2.0.0",
+    "@kyvg/vue3-notification": "^2.4.1",
     "add-to-calendar-button": "^1.15.1",
     "core-js": "^3.8.3",
     "register-service-worker": "^1.7.2",

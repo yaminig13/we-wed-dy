@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import Notifications from '@kyvg/vue3-notification'
 
 
 // Import regarding PWA
@@ -22,4 +23,5 @@ const router = createRouter({
 const app = createApp(App);
 
 app.use(router);
+app.use(Notifications)
 app.mount('#app');
