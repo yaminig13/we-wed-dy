@@ -73,10 +73,10 @@ export default {
             color: orange;
             cursor: pointer;
             @media (max-width:480px) {
-              position: absolute;
-              font-size: xxx-large;
-              bottom: 5rem;
-              right: 3rem;
+              // position: absolute;
+              // font-size: xxx-large;
+              // bottom: 5rem;
+              // right: 3rem;
             }
         }
       }

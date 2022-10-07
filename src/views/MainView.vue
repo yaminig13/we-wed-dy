@@ -2,9 +2,6 @@
   <div class="main-wrapper" :class="{'large-wrapper':isScheduleView}">
    
     <div class="main-body">
-      <!-- <div class="atcb" style="display:none;">
-        {{ JSON.stringify(eventData) }}
-      </div> -->
       <div class="main-body__tabs" v-if="isMainView">
         <ul>
           <li>
@@ -20,6 +17,13 @@
               
               <Button-Comp button-type="main-body__tabs--location" buttonText="Location"/>
             </a>
+          </li>
+
+          <li >
+            <!-- <a href="https://www.youtube.com/channel/UC79dNC2qJy5Qk9rWUF4pr5w"> -->
+              
+              <Button-Comp button-type="main-body__tabs--live" buttonText="Live Stream" @click="triggerNotif"/>
+            <!-- </a> -->
           </li>
         </ul>
       </div>
@@ -37,8 +41,6 @@
 
 <script>
 import ButtonComp from "../components/ButtonComp.vue";
-import { atcb_init } from "add-to-calendar-button";
-import "add-to-calendar-button/assets/css/atcb.css";
 import ImageGallery from "../components/ImageGallery.vue";
 import ImageGallerySelection from "../components/ImageGallerySelection.vue";
 import ScheduleList from "@/components/ScheduleList.vue";
@@ -61,29 +63,16 @@ export default {
       linkValue: ''
     }
   },
-  mounted() {
-    this.eventData = {
-      name: "Event",
-      startDate: "12-02-2022",
-      endDate: "13-02-2022",
-      options:[
-        "Apple",
-        "Google",
-        "iCal",  
-        "Microsoft365",
-        "MicrosoftTeams", 
-        "Outlook.com",
-        "Yahoo"
-      ],
-      trigger: "click",
-      listStyle: "list",
-      iCalFileName: "download_reminder"
-    }
-    this.$nextTick(() => {
-      atcb_init();
-    });
-  },
   methods:{
+    triggerNotif() {
+        this.$notify({
+        // title: "We want to share as many moments as possible!",
+        text: "Live Stream will start on the day of the event!",
+        duration: 1500,
+        ignoreDuplicates: true
+
+      });
+    },
     changeView(view,button) {
       this.isMainView=false;
       this.isGalleryView=false;

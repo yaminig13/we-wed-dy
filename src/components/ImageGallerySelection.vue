@@ -6,13 +6,14 @@
               <Button-Comp button-type="main-body__tabs--A" buttonText="Photos from Photographer" />
             </a>
           </li>
-          <li v-if="linkValue!=='engagement'">
+          
+          <li v-show="linkValue!=='engagement'">
             <a :href=downloadGuestUrl>
               <Button-Comp button-type="main-body__tabs--B" buttonText="Photos from Guests" />
             </a>
           </li>
 
-          <li v-if="linkValue!=='engagement'">
+          <li v-show="linkValue!=='engagement'">
             <a :href=uploadGuestUrl>
               <Button-Comp button-type="main-body__tabs--C" buttonText="Upload" />
             </a>
@@ -42,13 +43,9 @@ export default {
     }
   },
   mounted() {
-    this.$notify({
-      // title: "We want to share as many moments as possible!",
-      text: "You can upload photos clicked by your personal device by clicking on 'Upload' button. Photos from other guests and from a professional can be downloaded by clicking on respective buttons.",
-      duration: 30000
-    });
     if (this.linkValue=="engagement") {
       this.downloadUrl="https://photos.app.goo.gl/9vMPMxzu68A7h4i58";
+      this.uploadGuestUrl="https://photos.app.goo.gl/9vMPMxzu68A7h4i58";
     }
     if (this.linkValue=="haldi") {
       this.downloadUrl="https://photos.app.goo.gl/PPW4PxDAykQ2fDfy9";
@@ -74,6 +71,16 @@ export default {
       this.downloadUrl="https://photos.app.goo.gl/MZf93LNkFNpz9AAh7";
       this.uploadGuestUrl="https://dhruvyamini.quickconnect.to/mo/request/xxO0RoFfu";
       this.downloadGuestUrl="https://dhruvyamini.quickconnect.to/mo/sharing/kYDLD8lHi"
+    }
+
+    if(this.linkValue!=="engagement") {
+        this.$notify({
+        // title: "We want to share as many moments as possible!",
+        text: "You can upload photos clicked by your personal device by clicking on 'Upload' button. Photos from other guests and from a professional can be downloaded by clicking on respective buttons.",
+        duration: 5000,
+        ignoreDuplicates: true
+
+      });
     }
   },
   props: {
@@ -116,10 +123,10 @@ export default {
             color: orange;
             cursor: pointer;
             @media (max-width:480px) {
-              position: absolute;
+              // position: absolute;
               font-size: xxx-large;
-              bottom: 5rem;
-              right: 3rem;
+              // bottom: 5rem;
+              // right: 3rem;
             }
         }
       }

@@ -3,7 +3,9 @@
     <i class="fas fa-map-marker-alt" v-if="buttonType=='main-body__tabs--location'"></i>
     <i class="fas fa-images" v-if="buttonType=='main-body__tabs--gallery'"></i>
     <i class="far fa-calendar-alt" v-if="buttonType=='main-body__tabs--schedule'"></i>
-    {{ buttonText }}
+    <i class="fas fa-stream" v-if="buttonType=='main-body__tabs--live'"></i>
+
+    <div>{{ buttonText }} </div>
   </button>
 </template>
 

@@ -251,10 +251,10 @@ export default {
         cursor: pointer;
 
         @media (max-width:480px) {        
-            color: orange;
-            position: absolute;
-            bottom: 5rem;
-            right: 3rem;
+            color: black;
+            // position: absolute;
+            // bottom: 5rem;
+            // right: 3rem;
         }
     }
 }
