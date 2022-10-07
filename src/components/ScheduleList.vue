@@ -251,17 +251,17 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 4rem;
+        font-size: 2rem;
         color: orange;
         grid-column: 1/3;
         cursor: pointer;
 
-        @media (max-width:480px) {        
-            color: black;
-            // position: absolute;
-            // bottom: 5rem;
-            // right: 3rem;
-        }
+        // @media (max-width:480px) {        
+        //     color: black;
+        //     // position: absolute;
+        //     // bottom: 5rem;
+        //     // right: 3rem;
+        // }
     }
 }
 

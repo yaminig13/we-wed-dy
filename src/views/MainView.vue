@@ -22,7 +22,7 @@
           <li >
             <!-- <a href="https://www.youtube.com/channel/UC79dNC2qJy5Qk9rWUF4pr5w"> -->
               
-              <Button-Comp button-type="main-body__tabs--live" buttonText="Live Stream" @click="triggerNotif"/>
+              <Button-Comp button-type="main-body__tabs--live" buttonText="LiveStream" @click="triggerNotif"/>
             <!-- </a> -->
           </li>
         </ul>
@@ -34,6 +34,14 @@
 
       <image-gallery-selection v-if="isGallerySelectionView" @emitChange="changeView" :linkValue="linkValue"/>
 
+      <div class="install-notif__wrapper" ref="installNotif" v-show="showInstallNotif">
+        <div class="install-notif">
+          Install this webapp on your iOS device: Tap <i class="fa-solid fa-arrow-up-from-bracket"></i> 
+           and then 'Add to Homescreen'
+        </div>
+      
+        <i class="fa-solid fa-caret-down"></i>
+      </div>
 
     </div>
   </div>
@@ -56,11 +64,40 @@ export default {
   data() {
     return {
       isGalleryView: false,
-      isMainView:true,
-      isScheduleView:false,
-      isGallerySelectionView:false,
+      isMainView: true,
+      isScheduleView: false,
+      isGallerySelectionView: false,
       eventData: {},
-      linkValue: ''
+      linkValue: '',
+      showInstallNotif: false
+    }
+  },
+  mounted() {
+    if( this.isIOS && !this.isApp ){
+      console.log(this.isIOS);
+      console.log(this.isApp)
+      this.showInstallNotif=true;
+    }
+    if(this.showInstallNotif) {
+      setTimeout(() => {
+        // const box = document.getElementById('box');
+        const box = this.$refs.installNotif;
+        console.log(box)
+        // 👇️ removes element from DOM
+        box.style.display = 'none';
+
+        // 👇️ hides element (still takes up space on page)
+        // box.style.visibility = 'hidden';
+      }, 30000); 
+    }
+  },
+  computed: {
+    isIOS() {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      return /iphone|ipad|ipod/.test( userAgent );
+    },
+    isApp(){
+      return (('standalone' in window.navigator) && (window.navigator.standalone));
     }
   },
   methods:{
@@ -106,6 +143,37 @@ export default {
   to {
     transform: translateX(0);
   }
+}
+
+.install-notif__wrapper {
+
+    animation: appear ;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-delay: 5s;
+    opacity: 0;
+
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+
+  .install-notif {
+    padding: 0.5rem;
+    background: white;
+    color: black;
+    font-size: small;
+  }
+
+  .fa-caret-down {
+    font-size: xx-large;
+    position: absolute;
+    bottom: 0;
+    color: white;
+  }
+
 }
 
 .main-wrapper { 

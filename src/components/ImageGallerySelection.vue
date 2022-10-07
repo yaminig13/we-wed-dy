@@ -18,10 +18,10 @@
               <Button-Comp button-type="main-body__tabs--C" buttonText="Upload" />
             </a>
           </li>
-          <li class="back">
-            <i class="fa fa-arrow-circle-o-left" @click="$emit('emitChange','gallery')"></i>
-          </li>
         </ul>
+        <div class="back">
+          <i class="fa-solid fa-chevron-left" @click="$emit('emitChange','gallery')"></i>
+        </div>
         <div class="info" v-show="linkValue!=='engagement'">
           <i class="fa fa-info-circle" @click="triggerNotif"></i>
         </div>

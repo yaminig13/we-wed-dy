@@ -19,12 +19,13 @@
           <li>
             <Button-Comp button-type="main-body__tabs--E" buttonText="Other Functions" @click="$emit('emitChange','gallery-selection','other')"/>
           </li>
-        
-          
-          <li class="back">
+          <!-- <li class="back">
             <i class="fa fa-arrow-circle-o-left" @click="$emit('emitChange','main')"></i>
-          </li>
+          </li> -->
         </ul>
+        <div class="back">
+            <i class="fa-solid fa-chevron-left" @click="$emit('emitChange','main')"></i>
+        </div>
       </div>
 </template>
 
@@ -47,6 +48,13 @@ export default {
       opacity: 0;
       animation: appear 1s forwards;
 
+      .back {
+        position: absolute;
+        top: 7rem;
+        left: 1rem;
+        font-size: xx-large;
+        color: orange;
+      }
       ul { 
         padding: 0px; 
         margin: 0px; 
