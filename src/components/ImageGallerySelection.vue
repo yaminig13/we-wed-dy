@@ -22,18 +22,19 @@
             <i class="fa fa-arrow-circle-o-left" @click="$emit('emitChange','gallery')"></i>
           </li>
         </ul>
-      </div>
+        <div class="info" v-show="linkValue!=='engagement'">
+          <i class="fa fa-info-circle" @click="triggerNotif"></i>
+        </div>
+  </div>
 </template>
 
 <script>
 import ButtonComp from "./ButtonComp.vue";
-// import Notifications from '@kyvg/vue3-notification'
 
 export default {
   name: "ImageGallerySelection",
   components: {
     ButtonComp,
-    // Notifications
   },
   data () {
     return {
@@ -72,19 +73,22 @@ export default {
       this.uploadGuestUrl="https://dhruvyamini.quickconnect.to/mo/request/xxO0RoFfu";
       this.downloadGuestUrl="https://dhruvyamini.quickconnect.to/mo/sharing/kYDLD8lHi"
     }
-
-    if(this.linkValue!=="engagement") {
+    if (this.linkValue!=='engagement') {
+      this.triggerNotif();
+    }
+  },
+  props: {
+    linkValue: String
+  },
+  methods: {
+    triggerNotif() {
         this.$notify({
         // title: "We want to share as many moments as possible!",
         text: "You can upload photos clicked by your personal device by clicking on 'Upload' button. Photos from other guests and from a professional can be downloaded by clicking on respective buttons.",
         duration: 5000,
         ignoreDuplicates: true
-
       });
     }
-  },
-  props: {
-    linkValue: String
   }
 };
 </script>
@@ -95,8 +99,16 @@ export default {
       z-index: 1;
       width: 80%;
       opacity: 0;
-      animation: appear 2s forwards;
-
+      animation: appear 1s forwards;
+      
+      .info {
+        position: absolute;
+        bottom: 0;
+        padding: 2rem;
+        color: orange;
+        font-size: 2.5rem;
+        right: 0;
+      }
       ul { 
         padding: 0px; 
         margin: 0px; 

@@ -135,8 +135,8 @@ export default {
 
   .main-body { 
     animation: appear ;
-    animation-duration: 2s;
-    animation-delay: 6s;
+    animation-duration: 1s;
+    animation-delay: 2s;
     animation-fill-mode: forwards;
     display:flex; 
     flex-direction: column; 

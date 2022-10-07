@@ -45,7 +45,7 @@ export default {
       z-index: 1;
       width: 80%;
       opacity: 0;
-      animation: appear 2s forwards;
+      animation: appear 1s forwards;
 
       ul { 
         padding: 0px; 

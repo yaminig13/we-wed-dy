@@ -95,12 +95,13 @@ export default {
     },
     mounted() {
         const hdi = {
-            name: "Haldi",
+            name: "Haldi of Yamini & Dhruv",
             description: "Haldi of Yamini & Dhruv",
             startDate: "2022-12-04",
             endDate: "2022-12-04",
             startTime:"10:00",
             endTime:"13:00",
+            location: "Pool Side, Hotel Comfort Inn",
             options: ["Google", "Apple"],
             timeZone: "Asia/Kolkata",
             trigger: "click",
@@ -110,12 +111,13 @@ export default {
         HdiButton.addEventListener('click', () => atcb_action(hdi, HdiButton));
 
         const wdg = {
-            name: "Wedding",
+            name: "Wedding of Yamini & Dhruv",
             description: "Wedding of Yamini & Dhruv",
             startDate: "2022-12-04",
             endDate: "2022-12-05",
             startTime:"23:59",
             endTime:"03:00",
+            location: "Hotel Comfort Inn",
             options: ["Google", "Apple"],
             timeZone: "Asia/Kolkata",
             trigger: "click",
@@ -125,12 +127,13 @@ export default {
         WdgButton.addEventListener('click', () => atcb_action(wdg, WdgButton));
 
         const rcp = {
-            name: "Reception",
+            name: "Reception of Yamini & Dhruv",
             description: "Reception of Yamini & Dhruv",
             startDate: "2022-12-04",
             endDate: "2022-12-04",
             startTime:"19:00",
             endTime:"22:00",
+            location: "Hotel Comfort Inn",
             options: ["Google", "Apple"],
             timeZone: "Asia/Kolkata",
             trigger: "click",
@@ -140,12 +143,13 @@ export default {
         RcpButton.addEventListener('click', () => atcb_action(rcp, RcpButton));
 
         const bmd = {
-            name: "Mehendi",
-            description: "Mehendi of Yamini",
+            name: "Mehendi of Yamini",
+            description: "Mehendi",
             startDate: "2022-12-03",
             endDate: "2022-12-03",
             startTime:"08:00",
             endTime:"16:00",
+            location: "Hotel Comfort Inn",
             options: ["Google", "Apple"],
             timeZone: "Asia/Kolkata",
             trigger: "click",
@@ -155,12 +159,13 @@ export default {
         BmdButton.addEventListener('click', () => atcb_action(bmd, BmdButton));
 
         const gmd = {
-            name: "Mehendi",
-            description: "Mehendi of Dhruv",
+            name: "Mehendi of Dhruv",
+            description: "Mehendi",
             startDate: "2022-12-02",
             endDate: "2022-12-02",
             startTime:"10:00",
             endTime:"17:00",
+            location: "A-190, Anandbaug Society",
             options: ["Google", "Apple"],
             timeZone: "Asia/Kolkata",
             trigger: "click",
@@ -170,12 +175,13 @@ export default {
         GmdButton.addEventListener('click', () => atcb_action(gmd, GmdButton));
 
         const sgt = {
-            name: "Sangeet",
-            description: "Sangeet of Yamini & Dhruv",
+            name: "Sangeet of Yamini & Dhruv",
+            description: "Sangeet ",
             startDate: "2022-12-03",
             endDate: "2022-12-03",
             startTime:"19:00",
             endTime:"22:00",
+            location: "Priyadarshi Hall, Hotel Comfort Inn",
             options: ["Google", "Apple"],
             timeZone: "Asia/Kolkata",
             trigger: "click",
@@ -190,7 +196,7 @@ export default {
 .main-body {
 
     &__schedule-wrapper{
-        animation: appear 4s forwards;
+        animation: appear 1s forwards;
         display: grid;
         grid-template-columns: 1fr 1fr;
 
