@@ -76,11 +76,11 @@
                 <i class="far fa-calendar-alt"></i>
                 Add to calendar
             </button>
-        </div>
-        <div class="back">
-            <i class="fa fa-arrow-circle-o-left" @click="$emit('emitChange','main')"></i>
-        </div>  
+        </div> 
     </div>
+    <div class="back">
+        <i class="fa-solid fa-chevron-left" @click="$emit('emitChange','main')"></i>
+    </div> 
   </div>
 </template>
 
@@ -194,6 +194,14 @@ export default {
 </script>
 <style lang="less">
 .main-body {
+
+    .back {
+        position: absolute;
+        top: 7rem;
+        left: 1rem;
+        font-size: xx-large;
+        color: orange;
+    }
 
     &__schedule-wrapper{
         animation: appear 1s forwards;

@@ -150,7 +150,7 @@ export default {
     animation: appear ;
     animation-duration: 2s;
     animation-fill-mode: forwards;
-    animation-delay: 5s;
+    animation-delay: 2s;
     opacity: 0;
 
     padding: 1rem;
