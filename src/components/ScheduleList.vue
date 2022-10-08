@@ -58,7 +58,7 @@
                 Reception 
             </div>
             <div class="main-body__schedule-tabs--time">
-                4th December 2022, 1030 hrs
+                4th December 2022, 1900 hrs
             </div>
             <button class="event-button">
                 <i class="far fa-calendar-alt"></i>

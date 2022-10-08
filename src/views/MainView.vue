@@ -36,7 +36,7 @@
 
       <div v-click-outside="clickedOutside" class="install-notif__wrapper" ref="installNotif" v-show="showInstallNotif">
         <div class="install-notif">
-          Install this webapp on your iOS device: Tap <i class="fa-solid fa-arrow-up-from-bracket"></i> 
+          Install this webapp on your iOS device from Safari: Tap <i class="fa-solid fa-arrow-up-from-bracket"></i> 
            and then 'Add to Homescreen'
         </div>
       
