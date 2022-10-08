@@ -34,7 +34,7 @@
 
       <image-gallery-selection v-if="isGallerySelectionView" @emitChange="changeView" :linkValue="linkValue"/>
 
-      <div class="install-notif__wrapper" ref="installNotif" v-show="showInstallNotif">
+      <div v-click-outside="clickedOutside" class="install-notif__wrapper" ref="installNotif" v-show="showInstallNotif">
         <div class="install-notif">
           Install this webapp on your iOS device: Tap <i class="fa-solid fa-arrow-up-from-bracket"></i> 
            and then 'Add to Homescreen'
@@ -74,15 +74,12 @@ export default {
   },
   mounted() {
     if( this.isIOS && !this.isApp ){
-      console.log(this.isIOS);
-      console.log(this.isApp)
       this.showInstallNotif=true;
     }
     if(this.showInstallNotif) {
       setTimeout(() => {
         // const box = document.getElementById('box');
         const box = this.$refs.installNotif;
-        console.log(box)
         // 👇️ removes element from DOM
         box.style.display = 'none';
 
@@ -101,6 +98,9 @@ export default {
     }
   },
   methods:{
+    clickedOutside() {
+      this.showInstallNotif = false;
+    },
     triggerNotif() {
         this.$notify({
         // title: "We want to share as many moments as possible!",

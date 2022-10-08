@@ -121,14 +121,6 @@ export default {
           padding-right: 10px;
           padding-bottom: 10px;
           align-self: center;
-
-          &.back {
-            display: flex;
-            justify-content: center;
-            @media (max-width:480px) {
-                width: 100%;
-            }
-          }
         }
         i {
             font-size:xx-large;

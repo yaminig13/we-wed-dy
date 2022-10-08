@@ -255,13 +255,6 @@ export default {
         color: orange;
         grid-column: 1/3;
         cursor: pointer;
-
-        // @media (max-width:480px) {        
-        //     color: black;
-        //     // position: absolute;
-        //     // bottom: 5rem;
-        //     // right: 3rem;
-        // }
     }
 }
 
