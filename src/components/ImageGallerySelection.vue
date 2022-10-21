@@ -1,30 +1,41 @@
 <template>
-  <div class="main-body__gallery-tabs">
+  <div v-if="!isGuestButtonClicked" class="main-body__gallery-tabs">
         <ul>
           <li>
-            <a :href=downloadUrl>
-              <Button-Comp button-type="main-body__tabs--A" buttonText="Photos from Photographer" />
+            <a :href="photoUrl">
+              <Button-Comp v-if="linkValue=='engagement'" button-type="main-body__tabs--A" buttonText="Photos" />
+              <Button-Comp v-else button-type="main-body__tabs--A" buttonText="Photos from Photographer" />
             </a>
           </li>
           
           <li v-show="linkValue!=='engagement'">
-            <a :href=downloadGuestUrl>
-              <Button-Comp button-type="main-body__tabs--B" buttonText="Photos from Guests" />
-            </a>
-          </li>
-
-          <li v-show="linkValue!=='engagement'">
-            <a :href=uploadGuestUrl>
-              <Button-Comp button-type="main-body__tabs--C" buttonText="Upload" />
-            </a>
+            <button-comp buttonType="main-body__tabs--B" buttonText="Photos from Guests" @click="guestsChosen" ></button-comp>
           </li>
         </ul>
         <div class="back">
           <i class="fa-solid fa-chevron-left" @click="$emit('emitChange','gallery')"></i>
         </div>
-        <div class="info" v-show="linkValue!=='engagement'">
-          <i class="fa fa-info-circle" @click="triggerNotif"></i>
-        </div>
+        
+  </div>
+  <div class="main-body__gallery-tabs" v-else>
+    <ul>
+      <li>
+        <a :href=uploadGuestUrl>
+          <Button-Comp button-type="main-body__tabs--C" buttonText="Upload" />
+        </a>
+      </li>
+      <li>
+        <a :href=downloadGuestUrl>
+          <Button-Comp button-type="main-body__tabs--D" buttonText="Download" />
+        </a>
+      </li>
+    </ul>
+    <div class="back">  
+      <i class="fa-solid fa-chevron-left" @click="isGuestButtonClicked=false;"></i>
+    </div>
+    <div class="info" v-show="linkValue!=='engagement'">
+      <i class="fa fa-info-circle" @click="triggerNotif"></i>
+    </div>
   </div>
 </template>
 
@@ -40,51 +51,55 @@ export default {
     return {
       uploadGuestUrl: String,
       downloadGuestUrl: String,
-      donwloadUrl: String
+      photoUrl: String,
+      isGuestButtonClicked: false,
     }
   },
   mounted() {
     if (this.linkValue=="engagement") {
-      this.downloadUrl="https://photos.app.goo.gl/9vMPMxzu68A7h4i58";
+      this.photoUrl="https://photos.app.goo.gl/9vMPMxzu68A7h4i58";
       this.uploadGuestUrl="https://photos.app.goo.gl/9vMPMxzu68A7h4i58";
     }
     if (this.linkValue=="haldi") {
-      this.downloadUrl="https://photos.app.goo.gl/PPW4PxDAykQ2fDfy9";
-      this.uploadGuestUrl="https://dhruvyamini.quickconnect.to/mo/request/vbTsYV0cg";
-      this.downloadGuestUrl="https://dhruvyamini.quickconnect.to/mo/sharing/SODCY7lDJ"
+      this.photoUrl="https://photos.app.goo.gl/PPW4PxDAykQ2fDfy9";
+      this.uploadGuestUrl="https://dhruvgupta.smugmug.com/upload/4ccCcs/dhruvyaminihaldi";
+      this.downloadGuestUrl="https://dhruvgupta.smugmug.com/Haldi/n-xs7rv4"
     }
     if (this.linkValue=="mehendi") {
-      this.downloadUrl="https://photos.app.goo.gl/CvYJ5H8s58LihvPH9";
-      this.uploadGuestUrl="https://dhruvyamini.quickconnect.to/mo/request/xxO0RoFfu";
-      this.downloadGuestUrl="https://dhruvyamini.quickconnect.to/mo/sharing/kYDLD8lHi"
+      this.photoUrl="https://photos.app.goo.gl/CvYJ5H8s58LihvPH9";
+      this.uploadGuestUrl="https://dhruvgupta.smugmug.com/upload/9SBndc/dhruvyaminimehendi";
+      this.downloadGuestUrl="https://dhruvgupta.smugmug.com/Mehendi/n-tXC6tg"
     }
     if (this.linkValue=="sangeet") {
-      this.downloadUrl="https://photos.app.goo.gl/jGonE48y4Xy3rLzo6";
-      this.uploadGuestUrl="https://dhruvyamini.quickconnect.to/mo/request/o2KF2g8mv";
-      this.downloadGuestUrl="https://dhruvyamini.quickconnect.to/mo/sharing/e6eMKNjDm"
+      this.photoUrl="https://photos.app.goo.gl/jGonE48y4Xy3rLzo6";
+      this.uploadGuestUrl="https://dhruvgupta.smugmug.com/upload/VbF4mm/dhruvyaminisangeet";
+      this.downloadGuestUrl="https://dhruvgupta.smugmug.com/Sangeet/n-2C3mS9"
     }
     if (this.linkValue=="wedding") {
-      this.downloadUrl="https://photos.app.goo.gl/CSkpmwErZWMXKznx5";
-      this.uploadGuestUrl="https://dhruvyamini.quickconnect.to/mo/request/OQtQvL1Fr";
-      this.downloadGuestUrl="https://dhruvyamini.quickconnect.to/mo/sharing/mk39vYuhN"
+      this.photoUrl="https://photos.app.goo.gl/CSkpmwErZWMXKznx5";
+      this.uploadGuestUrl="https://dhruvgupta.smugmug.com/upload/5FPZWf/dhruvyaminiwedding";
+      this.downloadGuestUrl="https://dhruvgupta.smugmug.com/Wedding-Reception/n-fkD4PK"
     }
     if (this.linkValue=="other") {
-      this.downloadUrl="https://photos.app.goo.gl/MZf93LNkFNpz9AAh7";
-      this.uploadGuestUrl="https://dhruvyamini.quickconnect.to/mo/request/xxO0RoFfu";
-      this.downloadGuestUrl="https://dhruvyamini.quickconnect.to/mo/sharing/kYDLD8lHi"
-    }
-    if (this.linkValue!=='engagement') {
-      this.triggerNotif();
+      this.photoUrl="https://photos.app.goo.gl/MZf93LNkFNpz9AAh7";
+      this.uploadGuestUrl="https://dhruvgupta.smugmug.com/upload/d59c7s/dhruvyaminisonstiges";
+      this.downloadGuestUrl="https://dhruvgupta.smugmug.com/Other-Functions/n-chFGSH"
     }
   },
   props: {
     linkValue: String
   },
   methods: {
+    guestsChosen() {
+      this.isGuestButtonClicked=!this.isGuestButtonClicked;
+      if (this.linkValue!=='engagement') {
+        this.triggerNotif();
+      }
+    },
     triggerNotif() {
         this.$notify({
         // title: "We want to share as many moments as possible!",
-        text: "You can upload photos clicked by your personal device by clicking on 'Upload' button. Photos from other guests and from a professional can be downloaded by clicking on respective buttons.",
+        text: "We would love to collect photos clicked by you! You can also download photos shared by other guests!",
         duration: 5000,
         ignoreDuplicates: true
       });

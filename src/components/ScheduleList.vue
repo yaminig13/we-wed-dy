@@ -70,7 +70,7 @@
                 Wedding 
             </div>
             <div class="main-body__schedule-tabs--time">
-                4th December 2022, Midnight
+                4th December 2022, 2300 hrs
             </div>
             <button class="event-button">
                 <i class="far fa-calendar-alt"></i>
@@ -115,7 +115,7 @@ export default {
             description: "Wedding of Yamini & Dhruv",
             startDate: "2022-12-04",
             endDate: "2022-12-05",
-            startTime:"23:59",
+            startTime:"23:00",
             endTime:"03:00",
             location: "Hotel Comfort Inn",
             options: ["Google", "Apple"],
@@ -132,7 +132,7 @@ export default {
             startDate: "2022-12-04",
             endDate: "2022-12-04",
             startTime:"19:00",
-            endTime:"22:00",
+            endTime:"23:00",
             location: "Hotel Comfort Inn",
             options: ["Google", "Apple"],
             timeZone: "Asia/Kolkata",

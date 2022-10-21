@@ -14,10 +14,10 @@
             <Button-Comp button-type="main-body__tabs--D" buttonText="Sangeet" @click="$emit('emitChange','gallery-selection','sangeet')"/>
           </li>
           <li>
-            <Button-Comp button-type="main-body__tabs--F" buttonText="Wedding" @click="$emit('emitChange','gallery-selection','wedding')"/>
+            <Button-Comp button-type="main-body__tabs--E" buttonText="Wedding" @click="$emit('emitChange','gallery-selection','wedding')"/>
           </li>
           <li>
-            <Button-Comp button-type="main-body__tabs--E" buttonText="Other Functions" @click="$emit('emitChange','gallery-selection','other')"/>
+            <Button-Comp button-type="main-body__tabs--F" buttonText="Other Functions" @click="$emit('emitChange','gallery-selection','other')"/>
           </li>
           <!-- <li class="back">
             <i class="fa fa-arrow-circle-o-left" @click="$emit('emitChange','main')"></i>
