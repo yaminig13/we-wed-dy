@@ -1,9 +1,6 @@
 <template>
   <button :class="{'hovered':hovered}" @mouseenter="hovered=true" @mouseleave="hovered=false">
-    <i class="fas fa-map-marker-alt" v-if="buttonType=='main-body__tabs--location'"></i>
-    <i class="fas fa-images" v-if="buttonType=='main-body__tabs--gallery'"></i>
-    <i class="far fa-calendar-alt" v-if="buttonType=='main-body__tabs--schedule'"></i>
-    <i class="fas fa-stream" v-if="buttonType=='main-body__tabs--live'"></i>
+    <i :class="buttonIcon" v-if="buttonIcon"></i>
 
     <div>{{ buttonText }} </div>
   </button>
@@ -17,6 +14,7 @@ export default {
   props: {
     buttonType: String,
     buttonText: String,
+    buttonIcon: String
   },
   data(){
     return {

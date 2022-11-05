@@ -39,6 +39,10 @@ body {
   background-size: cover; 
 }
 
+.blur {
+  backdrop-filter: blur(10px);
+}
+
 .bg-light{
   background: linear-gradient(
       rgba(0,0, 0, 1), 

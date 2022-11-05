@@ -2,27 +2,27 @@
   <div class="main-wrapper" :class="{'large-wrapper':isScheduleView}">
    
     <div class="main-body">
-      <div class="main-body__tabs" v-if="isMainView">
+      <div class="main-body__tabs" v-if="isMainView && !liveVisible">
         <ul>
           <li>
-            <Button-Comp button-type="main-body__tabs--schedule" buttonText="Schedule" @click="changeView('schedule')"/>
+            <Button-Comp button-icon="far fa-calendar-alt" button-type="main-body__tabs--schedule" buttonText="Schedule" @click="changeView('schedule')"/>
           </li>
           <li>
             <!-- <router-link to="/imageGallery"> -->
-            <Button-Comp button-type="main-body__tabs--gallery" buttonText="Gallery" @click="changeView('gallery')"/>
+            <Button-Comp button-icon="fas fa-images" button-type="main-body__tabs--gallery" buttonText="Gallery" @click="changeView('gallery')"/>
             <!-- </router-link> -->
           </li>
           <li>
             <a href="https://maps.app.goo.gl/aJ3t7gXUnWjrPi5f6?g_st=iw">
               
-              <Button-Comp button-type="main-body__tabs--location" buttonText="Location"/>
+              <Button-Comp button-icon="fas fa-map-marker-alt" button-type="main-body__tabs--location" buttonText="Location"/>
             </a>
           </li>
 
           <li >
             <!-- <a href="https://www.youtube.com/channel/UC79dNC2qJy5Qk9rWUF4pr5w"> -->
               
-              <Button-Comp button-type="main-body__tabs--live" buttonText="LiveStream" @click="triggerNotif"/>
+              <Button-Comp button-icon="fas fa-stream" button-type="main-body__tabs--live" buttonText="LiveStream" @click="triggerNotif"/>
             <!-- </a> -->
           </li>
         </ul>
@@ -42,8 +42,20 @@
       
         <i class="fa-solid fa-caret-down"></i>
       </div>
-
     </div>
+  </div>
+
+  <div class="live-notif" v-if="liveVisible" v-click-outside="hideNotif">
+    Live Stream will start on the day of the event on this YouTube channel.
+    <a href="https://youtube.com/c/AshutoshRubber">
+      <ButtonComp buttonText="Redirect to YouTube" button-icon="fa fa-external-link"></ButtonComp>
+    </a>
+    <span class="caption">
+      We sincerely thank "Ashutosh Rubber" for streaming the events.
+    </span>
+    <span class="icon-close">
+      <i class="fa fa-window-close" @click="hideNotif"></i>
+    </span>
   </div>
 </template>
 
@@ -69,7 +81,8 @@ export default {
       isGallerySelectionView: false,
       eventData: {},
       linkValue: '',
-      showInstallNotif: false
+      showInstallNotif: false,
+      liveVisible: false
     }
   },
   mounted() {
@@ -101,14 +114,13 @@ export default {
     clickedOutside() {
       this.showInstallNotif = false;
     },
+    hideNotif() {
+      this.liveVisible = false;
+      document.body.classList.remove('blur');
+    },
     triggerNotif() {
-        this.$notify({
-        // title: "We want to share as many moments as possible!",
-        text: "Live Stream will start on the day of the event!",
-        duration: 1500,
-        ignoreDuplicates: true
-
-      });
+      this.liveVisible=true;
+      document.body.classList.add('blur');
     },
     changeView(view,button) {
       this.isMainView=false;
@@ -145,6 +157,36 @@ export default {
   }
 }
 
+
+.live-notif {
+  background: black;
+  color: orange;
+  padding: 2rem 2rem 1rem 2rem;
+  margin: 1rem;
+  position: absolute;
+  top: 45%;
+  border-left: 8px solid orange;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  button {
+    margin: 2rem 1rem 1rem 1rem;
+  }
+  .icon-close {
+    position: absolute;
+    top: 0;
+    right: 2px;
+
+    i {
+      font-size: 1.25rem;
+    }
+  }
+
+.caption {
+  font-size: 0.5rem;
+}
+}
 .install-notif__wrapper {
 
     animation: appear ;
