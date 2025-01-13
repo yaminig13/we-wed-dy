@@ -34,6 +34,7 @@
 
       <image-gallery-selection v-if="isGallerySelectionView" @emitChange="changeView" :linkValue="linkValue"/>
 
+      <guest-gallery v-if="isGuestGalleryView" @emitChange="changeView" :linkValue="linkValue"></guest-gallery>
       <div v-click-outside="clickedOutside" class="install-notif__wrapper" ref="installNotif" v-show="showInstallNotif">
         <div class="install-notif">
           Install this webapp on your iOS device from Safari: Tap <i class="fa-solid fa-arrow-up-from-bracket"></i> 
@@ -60,6 +61,7 @@
 </template>
 
 <script>
+import GuestGallery from "@/components/GuestGallery.vue";
 import ButtonComp from "../components/ButtonComp.vue";
 import ImageGallery from "../components/ImageGallery.vue";
 import ImageGallerySelection from "../components/ImageGallerySelection.vue";
@@ -71,7 +73,8 @@ export default {
     ButtonComp,
     ImageGallery,
     ScheduleList,
-    ImageGallerySelection
+    ImageGallerySelection,
+    GuestGallery
   },
   data() {
     return {
@@ -79,6 +82,7 @@ export default {
       isMainView: true,
       isScheduleView: false,
       isGallerySelectionView: false,
+      isGuestGalleryView:false,
       eventData: {},
       linkValue: '',
       showInstallNotif: false,
@@ -127,6 +131,7 @@ export default {
       this.isGalleryView=false;
       this.isScheduleView=false;
       this.isGallerySelectionView=false;
+      this.isGuestGalleryView=false;
       if(view=="gallery-selection") {
         this.isGallerySelectionView=true;
         this.linkValue=button;
@@ -139,6 +144,10 @@ export default {
       }
       if(view=="main") {
         this.isMainView=true;
+      }
+      if(view=="guestGallery") {
+        this.isGuestGalleryView = true;
+        this.linkValue = button;
       }
     }
   }
