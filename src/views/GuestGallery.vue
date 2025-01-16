@@ -11,10 +11,13 @@
     <div>
       <v-dialog max-width="500">
         <template v-slot:activator="{ props: activatorProps }">
-          <v-btn v-bind="activatorProps" icon="fas fa-plus" size="small"/>
+          <v-btn v-bind="activatorProps" icon="fas fa-plus" size="small" color="orange"/>
         </template>
         <template v-slot:default="{ isActive }">
-          <v-card title="Upload Photo" append-icon="fa fa-close" @click:append="isActive.value = false" color="black">
+          <v-card title="Upload Photo" color="black">
+            <template v-slot:append>
+              <v-btn icon="fa fa-close" @click="isActive.value=false" variant="text" size="smalls"></v-btn>
+            </template>
             <v-card-text>
               <v-file-input
                 v-model="uploadArray"
@@ -24,11 +27,11 @@
                 accept="image/*"
                 multiple
                 chips
-                @change="handleFileUpload"
               ></v-file-input>
             </v-card-text>
               <v-btn
                 text="Upload"
+                color="orange"
                 @click="uploadFile"
               ></v-btn>
           </v-card>
@@ -37,39 +40,48 @@
     </div>
   </div>
   <v-container fluid class="pa-4">
-  <v-row class="image-gallery">
-    <v-col
-      v-for="photo,index in photos"
-      :key="photo.url"
-      class="d-flex child-flex image-column"
-      cols="3"
-      :class="{
-          'no-left-padding': index % itemsPerRow === 0, /* First in row */
-          'no-right-padding': (index + 1) % itemsPerRow === 0, /* Last in row */
-        }"
-    >
-      <v-img
-        :lazy-src="photo.url"
-        :src="photo.url"
-        aspect-ratio="1"
-        class="bg-grey-lighten-2"
-        cover
+    <v-row class="image-gallery">
+      <v-col
+        v-for="photo,index in photos"
+        :key="photo.url"
+        class="d-flex child-flex image-column"
+        cols="3"
+        :class="{
+            'no-left-padding': index % itemsPerRow === 0, /* First in row */
+            'no-right-padding': (index + 1) % itemsPerRow === 0, /* Last in row */
+          }"
       >
-        <template v-slot:placeholder>
-          <v-row
-            align="center"
-            class="fill-height ma-0"
-            justify="center"
-          >
-            <v-progress-circular
-              color="grey-lighten-5"
-              indeterminate
-            ></v-progress-circular>
-          </v-row>
-        </template>
-      </v-img>
-    </v-col>
-  </v-row>
+        <v-img
+          :lazy-src="photo.url"
+          :src="photo.url"
+          aspect-ratio="1"
+          class="bg-grey-lighten-2"
+          cover
+          @click="openPreview(photo.url)"
+        >
+          <template v-slot:placeholder>
+            <v-row
+              align="center"
+              class="fill-height ma-0"
+              justify="center"
+            >
+              <v-progress-circular
+                color="grey-lighten-5"
+                indeterminate
+              ></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
+      </v-col>
+    </v-row>
+    <!-- Image Preview Dialog -->
+    <v-dialog v-model="previewOpen" max-width="90%">
+      <v-card color="black">
+          <v-img :src="selectedImage" aspect-ratio="1">
+            <v-btn class="close-icon" icon="fa fa-close" variant="flat" color="black" size="small" @click="previewOpen = false"></v-btn>
+          </v-img>
+      </v-card> 
+    </v-dialog>
   </v-container>
 
   
@@ -86,16 +98,23 @@ export default {
         itemsPerRow: 4,
         photos: [],
         uploadArray: [],
-        isLoading: false
+        isLoading: false,
+        previewOpen: false,
+        selectedImage: ''
     }
   },
   props: {
     linkValue: String
   },
-  // components: {
-  //   ButtonComp,
-  // },
   methods: {
+    test() {
+      console.log('hi')
+    },
+    openPreview(index) {
+      console.log(index)
+      this.selectedImage = index;
+      this.previewOpen = true;
+    },
     async fetchPhotos() {
       const folderRef = ref(storage, this.linkValue);
       try {
@@ -109,9 +128,6 @@ export default {
         console.error("Error fetching photos:", error);
       }
     },
-    handleFileUpload(event) {
-            this.file = event.target.files[0];
-        },
     async uploadFile() {
       if (!this.uploadArray.length) {
           alert("No file selected!");
@@ -129,7 +145,16 @@ export default {
           console.error("Error uploading file:", error);
           alert("File upload failed.");
         }
-    }
+    },
+    async downloadFile(fileName) {
+           const storageRef = ref(storage, `uploads/${fileName}`);
+           try {
+               const url = await getDownloadURL(storageRef);
+               window.open(url, "_blank");
+           } catch (error) {
+               console.error("Error downloading file:", error);
+           }
+       },
   },
   mounted() {
     this.fetchPhotos();
@@ -154,8 +179,6 @@ img {
 }
 
 .v-btn {
-  background-color: orange;
-  color: black;
   font-family: Lobster;
   text-transform: none;
 }
@@ -163,6 +186,11 @@ img {
   position: absolute;
   top: 50vh;
   right: -60vw;
+}
+
+.close-icon {
+  margin: 10px;
+  float: inline-end;
 }
 
 </style>
