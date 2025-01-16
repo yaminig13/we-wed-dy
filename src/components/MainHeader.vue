@@ -84,15 +84,15 @@ export default {
   text-align: center;
   display: flex;
   flex-direction: column;
-  margin-bottom: 10rem;
+  // margin-bottom: 10rem;
   top:0;
   left: 35%;
   animation-name: movebottom;
   animation-duration: 2s;
 
-  @media (max-width:480px) {
-    margin-bottom: 45%;
-  }
+  // @media (max-width:480px) {
+  //   margin-bottom: 45%;
+  // }
 
 
   &__names {

@@ -94,7 +94,9 @@ export default {
       this.isGuestButtonClicked=!this.isGuestButtonClicked;
       if (this.linkValue!=='engagement') {
         this.triggerNotif();
-        this.$emit('emitChange','guestGallery',this.linkValue)
+        // this.$emit('emitChange','guestGallery',this.linkValue)
+        this.$router.push(`/guestGallery/${this.linkValue}`);
+        
       }
     },
     triggerNotif() {

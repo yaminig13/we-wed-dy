@@ -1,6 +1,5 @@
 <template>
   <div class="main-wrapper" :class="{'large-wrapper':isScheduleView}">
-   
     <div class="main-body">
       <div class="main-body__tabs" v-if="isMainView && !liveVisible">
         <ul>
@@ -61,7 +60,7 @@
 </template>
 
 <script>
-import GuestGallery from "@/components/GuestGallery.vue";
+import GuestGallery from "@/views/GuestGallery.vue";
 import ButtonComp from "../components/ButtonComp.vue";
 import ImageGallery from "../components/ImageGallery.vue";
 import ImageGallerySelection from "../components/ImageGallerySelection.vue";
@@ -231,21 +230,10 @@ export default {
   margin: 15rem 0 .5rem 0; 
   display: flex ; 
   flex-direction: column; 
-  padding-top: 5rem;
 
   @media (max-width:480px) {
-    padding-top: 10rem;
-    margin-top: 0;
+    margin-top: 50vw;
   }
-
-  &.large-wrapper {
-    padding-top: 2.5rem;
-    @media (min-width:480px) {
-      margin-top: -1.5rem;
-      padding-top: 0;
-    }
-  }
-
 
   @keyframes appear {
     from {opacity:0;}
