@@ -19,17 +19,17 @@ import MainView from './views/MainView';
 import GuestGallery from './views/GuestGallery.vue'
 
 const vuetify = createVuetify({
-    components,
-    directives,
-  })
+  components,
+  directives,
+})
 
 
 const router = createRouter({
-    history: createWebHistory(), 
-    routes: [
-        { path:'/', component: MainView },
-        { path:'/guestGallery/:linkValue', component: GuestGallery, props: true }
-    ]
+  history: createWebHistory(),
+  routes: [
+    { path: '/', component: MainView },
+    { path: '/guestGallery/:linkValue', component: GuestGallery, props: true }
+  ]
 });
 
 const app = createApp(App);

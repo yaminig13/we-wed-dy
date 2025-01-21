@@ -1,60 +1,114 @@
 <template>
-  <div class="main-wrapper" :class="{'large-wrapper':isScheduleView}">
+  <div
+    class="main-wrapper"
+    :class="{'large-wrapper':isScheduleView}"
+  >
     <div class="main-body">
-      <div class="main-body__tabs" v-if="isMainView && !liveVisible">
+      <div
+        v-if="isMainView && !liveVisible"
+        class="main-body__tabs"
+      >
         <ul>
           <li>
-            <Button-Comp button-icon="far fa-calendar-alt" button-type="main-body__tabs--schedule" buttonText="Schedule" @click="changeView('schedule')"/>
+            <Button-Comp
+              button-icon="far fa-calendar-alt"
+              button-type="main-body__tabs--schedule"
+              button-text="Schedule"
+              @click="changeView('schedule')"
+            />
           </li>
           <li>
             <!-- <router-link to="/imageGallery"> -->
-            <Button-Comp button-icon="fas fa-images" button-type="main-body__tabs--gallery" buttonText="Gallery" @click="changeView('gallery')"/>
+            <Button-Comp
+              button-icon="fas fa-images"
+              button-type="main-body__tabs--gallery"
+              button-text="Gallery"
+              @click="changeView('gallery')"
+            />
             <!-- </router-link> -->
           </li>
           <li>
             <a href="https://maps.app.goo.gl/aJ3t7gXUnWjrPi5f6?g_st=iw">
-              
-              <Button-Comp button-icon="fas fa-map-marker-alt" button-type="main-body__tabs--location" buttonText="Location"/>
+
+              <Button-Comp
+                button-icon="fas fa-map-marker-alt"
+                button-type="main-body__tabs--location"
+                button-text="Location"
+              />
             </a>
           </li>
 
-          <li >
+          <li>
             <!-- <a href="https://www.youtube.com/channel/UC79dNC2qJy5Qk9rWUF4pr5w"> -->
-              
-              <Button-Comp button-icon="fas fa-stream" button-type="main-body__tabs--live" buttonText="LiveStream" @click="triggerNotif"/>
+
+            <Button-Comp
+              button-icon="fas fa-stream"
+              button-type="main-body__tabs--live"
+              button-text="LiveStream"
+              @click="triggerNotif"
+            />
             <!-- </a> -->
           </li>
         </ul>
       </div>
 
-      <Image-Gallery v-if="isGalleryView" @emitChange="changeView"></Image-Gallery>
+      <Image-Gallery
+        v-if="isGalleryView"
+        @emitChange="changeView"
+      />
 
-      <Schedule-List v-if="isScheduleView" @emitChange="changeView"></Schedule-List>
+      <Schedule-List
+        v-if="isScheduleView"
+        @emitChange="changeView"
+      />
 
-      <image-gallery-selection v-if="isGallerySelectionView" @emitChange="changeView" :linkValue="linkValue"/>
+      <image-gallery-selection
+        v-if="isGallerySelectionView"
+        :link-value="linkValue"
+        @emitChange="changeView"
+      />
 
-      <guest-gallery v-if="isGuestGalleryView" @emitChange="changeView" :linkValue="linkValue"></guest-gallery>
-      <div v-click-outside="clickedOutside" class="install-notif__wrapper" ref="installNotif" v-show="showInstallNotif">
+      <guest-gallery
+        v-if="isGuestGalleryView"
+        :link-value="linkValue"
+        @emitChange="changeView"
+      />
+      <div
+        v-show="showInstallNotif"
+        ref="installNotif"
+        v-click-outside="clickedOutside"
+        class="install-notif__wrapper"
+      >
         <div class="install-notif">
-          Install this webapp on your iOS device from Safari: Tap <i class="fa-solid fa-arrow-up-from-bracket"></i> 
-           and then 'Add to Homescreen'
+          Install this webapp on your iOS device from Safari: Tap <i class="fa-solid fa-arrow-up-from-bracket" />
+          and then 'Add to Homescreen'
         </div>
-      
-        <i class="fa-solid fa-caret-down"></i>
+
+        <i class="fa-solid fa-caret-down" />
       </div>
     </div>
   </div>
 
-  <div class="live-notif" v-if="liveVisible" v-click-outside="hideNotif">
+  <div
+    v-if="liveVisible"
+    v-click-outside="hideNotif"
+    class="live-notif"
+  >
     Live Stream will start on the day of the event on this YouTube channel.
     <a href="https://youtube.com/c/AshutoshRubber">
-      <ButtonComp buttonText="Redirect to YouTube" button-icon="fa fa-external-link"></ButtonComp>
+      <ButtonComp
+        button-text="Redirect to YouTube"
+        button-icon="fa fa-external-link"
+      />
     </a>
     <span class="caption">
       We sincerely thank "Ashutosh Rubber" for streaming the events.
     </span>
     <span class="icon-close">
-      <i class="fa fa-window-close" @click="hideNotif"></i>
+      <i
+        class="fa fa-window-close"
+        @click="hideNotif"
+      />
     </span>
   </div>
 </template>
@@ -81,18 +135,27 @@ export default {
       isMainView: true,
       isScheduleView: false,
       isGallerySelectionView: false,
-      isGuestGalleryView:false,
+      isGuestGalleryView: false,
       eventData: {},
       linkValue: '',
       showInstallNotif: false,
       liveVisible: false
     }
   },
+  computed: {
+    isIOS() {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      return /iphone|ipad|ipod/.test(userAgent);
+    },
+    isApp() {
+      return (('standalone' in window.navigator) && (window.navigator.standalone));
+    }
+  },
   mounted() {
-    if( this.isIOS && !this.isApp ){
+    if (this.isIOS && !this.isApp) {
       this.showInstallNotif=true;
     }
-    if(this.showInstallNotif) {
+    if (this.showInstallNotif) {
       setTimeout(() => {
         // const box = document.getElementById('box');
         const box = this.$refs.installNotif;
@@ -101,19 +164,10 @@ export default {
 
         // 👇️ hides element (still takes up space on page)
         // box.style.visibility = 'hidden';
-      }, 30000); 
+      }, 30000);
     }
   },
-  computed: {
-    isIOS() {
-      const userAgent = window.navigator.userAgent.toLowerCase();
-      return /iphone|ipad|ipod/.test( userAgent );
-    },
-    isApp(){
-      return (('standalone' in window.navigator) && (window.navigator.standalone));
-    }
-  },
-  methods:{
+  methods: {
     clickedOutside() {
       this.showInstallNotif = false;
     },
@@ -125,26 +179,26 @@ export default {
       this.liveVisible=true;
       document.body.classList.add('blur');
     },
-    changeView(view,button) {
+    changeView(view, button) {
       this.isMainView=false;
       this.isGalleryView=false;
       this.isScheduleView=false;
       this.isGallerySelectionView=false;
       this.isGuestGalleryView=false;
-      if(view=="gallery-selection") {
+      if (view=="gallery-selection") {
         this.isGallerySelectionView=true;
         this.linkValue=button;
       }
-      if(view=="schedule"){
+      if (view=="schedule") {
         this.isScheduleView=true;
       }
-      if(view=="gallery"){
+      if (view=="gallery") {
         this.isGalleryView=true;
       }
-      if(view=="main") {
+      if (view=="main") {
         this.isMainView=true;
       }
-      if(view=="guestGallery") {
+      if (view=="guestGallery") {
         this.isGuestGalleryView = true;
         this.linkValue = button;
       }
@@ -226,10 +280,10 @@ export default {
 
 }
 
-.main-wrapper { 
-  margin: 15rem 0 .5rem 0; 
-  display: flex ; 
-  flex-direction: column; 
+.main-wrapper {
+  margin: 15rem 0 .5rem 0;
+  display: flex ;
+  flex-direction: column;
 
   @media (max-width:480px) {
     margin-top: 50vw;
@@ -240,27 +294,27 @@ export default {
     to {opacity:1;}
   }
 
-  .main-body { 
+  .main-body {
     animation: appear ;
     animation-duration: 1s;
     animation-delay: 2s;
     animation-fill-mode: forwards;
-    display:flex; 
-    flex-direction: column; 
-    height: 50%; 
+    display:flex;
+    flex-direction: column;
+    height: 50%;
     align-items: center;
     opacity: 0;
-    
+
 
     &__tabs {
       margin: auto 0 0 12px;
       z-index: 1;
 
-      ul { 
-        padding: 0px; 
-        margin: 0px; 
-        list-style: none; 
-        display: flex; 
+      ul {
+        padding: 0px;
+        margin: 0px;
+        list-style: none;
+        display: flex;
 
         li {
           padding-right: 10px;
@@ -269,7 +323,7 @@ export default {
         }
       }
     }
-  } 
+  }
 }
 
 </style>

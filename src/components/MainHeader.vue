@@ -2,14 +2,14 @@
   <div class="main-header">
     <div class="main-header__names">
       <div class="main-header__names--bride-name">
-        {{bride}}
+        {{ bride }}
       </div>
-        <span>&</span>
+      <span>&</span>
       <div class="main-header__names--groom-name">
-        {{groom}}
+        {{ groom }}
       </div>
     </div>
-    
+
     <!-- <div class="main-header__title">
       <span>{{ mainTitle }}</span>
     </div> -->
@@ -19,7 +19,6 @@
         <li>{{ hashtag_2 }}</li>
         <li>{{ hashtag_1 }}</li>
         <!-- <li>{{ hashtag_1 }}</li> -->
-
       </ul>
       <!-- <span>{{ subTitle }}</span> -->
     </div>
@@ -32,10 +31,10 @@ export default {
   data() {
     return {
       mainTitle: "Yamini & Dhruv",
-      bride:"Yamini",
-      groom:"Dhruv",
+      bride: "Yamini",
+      groom: "Dhruv",
       hashtag_1: "#GuptaFoundGupta",
-      hashtag_2:"#YaminiKaDhruvTara",
+      hashtag_2: "#YaminiKaDhruvTara",
       backgroundImage: "/src/assets/bg-desktop.jpg",
     };
   },
@@ -44,7 +43,7 @@ export default {
 
 <style lang="less">
 
-  
+
 
   @keyframes movebottom {
     from {top: -90px;}
@@ -54,13 +53,13 @@ export default {
   @keyframes widthReduction {
     from {width: 100%;}
     to { width :30%;}
-    
+
   }
 
    @keyframes widthReductionMobile {
     from {width: 100%;}
     to { width : 70%;}
-    
+
   }
 
   @keyframes appear {
@@ -69,7 +68,7 @@ export default {
   }
 
 
-@keyframes 
+@keyframes
 	scrollUp {
 		50% { transform: translateY(-30%);
     }
@@ -143,7 +142,7 @@ export default {
     margin: 1rem 0;
     overflow: hidden;
     opacity: 0;
-    animation: appear 4s 3s forwards; 
+    animation: appear 4s 3s forwards;
 
     ul {
       margin: 0 0.625rem;
@@ -154,7 +153,7 @@ export default {
         align-items: center;
         justify-content: center;
         height: 3rem;
-        list-style: none; 
+        list-style: none;
       }
     }
   }

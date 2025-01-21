@@ -9,6 +9,22 @@
   <div class="ma-4 d-flex mb-8 justify-space-between">
     <h1> {{ linkValue.charAt(0).toUpperCase() + String(linkValue).slice(1) }} </h1>
     <div>
+      <v-btn
+        v-if="selectionMode"
+        icon="fa fa-download"
+        variant="flat"
+        color="orange"
+        size="small"
+        class="mr-2"
+        @click="downloadArrayFiles()"
+      />
+      <v-btn
+        icon="fas fa-check"
+        size="small"
+        :color="buttonSelected"
+        class="mr-2"
+        @click="toggleSelectionMode"
+      />
       <v-dialog max-width="500">
         <template #activator="{ props: activatorProps }">
           <v-btn
@@ -87,6 +103,21 @@
               />
             </v-row>
           </template>
+
+          <!-- Show Checkbox in Selection Mode -->
+          <template #default>
+            <div
+              v-if="selectionMode"
+              class="overlay"
+            >
+              <v-checkbox
+                v-model="downloadArray"
+                :value="photo"
+                hide-details
+                class="checkbox"
+              />
+            </div>
+          </template>
         </v-img>
       </v-col>
     </v-row>
@@ -117,7 +148,7 @@
             />
           </div>
         </v-img>
-      </v-card> 
+      </v-card>
     </v-dialog>
   </v-container>
 </template>
@@ -126,26 +157,42 @@
 import { ref, listAll, getDownloadURL, uploadBytes } from "firebase/storage";
 import { storage } from "../firebase";
 import { saveAs } from "file-saver";
+import JSZip from "jszip";
 
 export default {
   name: "GuestGallery",
   props: {
     linkValue: String
   },
-  data () {
+  data() {
     return {
-        itemsPerRow: 4,
-        photos: [],
-        uploadArray: [],
-        isLoading: false,
-        previewOpen: false,
-        selectedImage: ''
+      itemsPerRow: 4,
+      photos: [],
+      uploadArray: [],
+      isLoading: false,
+      previewOpen: false,
+      selectedImage: '',
+      selectionMode: false,
+      buttonSelected: 'beige',
+      downloadArray: [],
+      isDownloaded: false
     }
   },
   mounted() {
     this.fetchPhotos();
   },
   methods: {
+    toggleSelectionMode() {
+      if (!this.selectionMode) {
+        this.buttonSelected = 'orange';
+        this.selectionMode = true;
+      }
+      else {
+        this.buttonSelected = 'beige';
+        this.selectionMode = false;
+        this.downloadArray = [];
+      }
+    },
     openPreview(photo) {
       this.selectedImage = photo;
       this.previewOpen = true;
@@ -155,7 +202,7 @@ export default {
       const folderRef = ref(storage, this.linkValue);
       try {
         const result = await listAll(folderRef);
-        const photoPromises = result.items.map(async (itemRef) => {
+        const photoPromises = result.items.map(async(itemRef) => {
           const url = await getDownloadURL(itemRef);
           return { name: itemRef.name, url };
         });
@@ -167,8 +214,8 @@ export default {
     },
     async uploadFile() {
       if (!this.uploadArray.length) {
-          alert("Please select a photo!");
-          return;
+        alert("Please select a photo!");
+        return;
       }
       try {
         this.isLoading = true;
@@ -178,19 +225,44 @@ export default {
           await uploadBytes(storageRef, file);
         }
         alert("Photos uploaded successfully!");
-        this.$router.go();     
+        this.$router.go();
       } catch (error) {
-          console.error("Error uploading file:", error);
-          alert("File upload failed.");
-        }
+        console.error("Error uploading file:", error);
+        alert("File upload failed.");
+      }
     },
     async downloadFile(photo) {
+      this.isDownloading = true;
       await fetch(photo.url)
         .then((response) => response.blob())
         .then((blob) => {
           saveAs(blob, photo.name);
+        })
+    },
+    async downloadArrayFiles() {
+      if (this.downloadArray.length > 0) {
+        this.isLoading = true;
+        const zip = new JSZip();
+        const imgFolder = zip.folder("WeWed");
+        this.isDownloading = true;
+        // Fetch each image and add it to the ZIP
+        const fetchPromises = this.downloadArray.map(async(image) => {
+          const response = await fetch(image.url);
+          const blob = await response.blob();
+          imgFolder.file(image.name, blob);
         });
-       },
+
+        try {
+          await Promise.all(fetchPromises); // Wait for all fetches to complete
+          const zipBlob = await zip.generateAsync({ type: "blob" }); // Generate ZIP file
+          saveAs(zipBlob, "WeWed.zip"); // Trigger download
+          this.isLoading = false;
+        } catch (error) {
+          console.error("Error generating ZIP file:", error);
+          alert("Failed to download photos.");
+        }
+      }
+    }
   },
 }
 </script>
@@ -221,15 +293,27 @@ img {
   right: -60vw;
 }
 
-// .close-icon {
-//   margin: 10px;
-//   float: inline-end;
-// }
-
 .preview-image {
   display: flex;
   margin: 10px;
   justify-content: space-between;
 }
 
+.overlay {
+  z-index: 1;
+}
+
+.checkbox {
+  --v-checkbox-size: 20px; /* Set a smaller checkbox size */
+  color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+}
+
+.checkbox input {
+  opacity: 0.7; /* Makes the checkbox background semi-transparent */
+  height: 50%;
+  width: 50%;
+}
+.v-checkbox .v-selection-control {
+  min-height: unset;
+}
 </style>

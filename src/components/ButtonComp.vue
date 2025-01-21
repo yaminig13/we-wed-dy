@@ -1,6 +1,13 @@
 <template>
-  <button :class="{'hovered':hovered}" @mouseenter="hovered=true" @mouseleave="hovered=false">
-    <i :class="buttonIcon" v-if="buttonIcon"></i>
+  <button
+    :class="{'hovered':hovered}"
+    @mouseenter="hovered=true"
+    @mouseleave="hovered=false"
+  >
+    <i
+      v-if="buttonIcon"
+      :class="buttonIcon"
+    />
 
     <div>{{ buttonText }} </div>
   </button>
@@ -16,7 +23,7 @@ export default {
     buttonText: String,
     buttonIcon: String
   },
-  data(){
+  data() {
     return {
       hovered: false
     }
@@ -37,7 +44,7 @@ button {
   cursor: pointer;
   font-size: 1rem;
   border-radius: 10px;
-  border: 2px outset beige; 
+  border: 2px outset beige;
 
   @media (max-width:480px) {
     font-size: .875rem;
@@ -46,7 +53,7 @@ button {
   &.hovered {
     background: beige;
     color:orange;
-    border: 2px outset orange; 
+    border: 2px outset orange;
 
   }
 }

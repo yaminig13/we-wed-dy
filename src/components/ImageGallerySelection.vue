@@ -1,40 +1,75 @@
 <template>
-  <div v-if="!isGuestButtonClicked" class="main-body__gallery-tabs">
-        <ul>
-          <li>
-            <a :href="photoUrl">
-              <Button-Comp v-if="linkValue=='engagement'" button-type="main-body__tabs--A" buttonText="Photos" />
-              <Button-Comp v-else button-type="main-body__tabs--A" buttonText="Photos from Photographer" />
-            </a>
-          </li>
-          
-          <li v-show="linkValue!=='engagement'">
-            <button-comp buttonType="main-body__tabs--B" buttonText="Photos from Guests" @click="guestsChosen" ></button-comp>
-          </li>
-        </ul>
-        <div class="back">
-          <i class="fa-solid fa-chevron-left" @click="$emit('emitChange','gallery')"></i>
-        </div>
-        
-  </div>
-  <div class="main-body__gallery-tabs" v-else>
+  <div
+    v-if="!isGuestButtonClicked"
+    class="main-body__gallery-tabs"
+  >
     <ul>
       <li>
-        <a :href=uploadGuestUrl>
-          <Button-Comp button-type="main-body__tabs--C" buttonText="Upload" />
+        <a :href="photoUrl">
+          <Button-Comp
+            v-if="linkValue=='engagement'"
+            button-type="main-body__tabs--A"
+            button-text="Photos"
+          />
+          <Button-Comp
+            v-else
+            button-type="main-body__tabs--A"
+            button-text="Photos from Photographer"
+          />
+        </a>
+      </li>
+
+      <li v-show="linkValue!=='engagement'">
+        <button-comp
+          button-type="main-body__tabs--B"
+          button-text="Photos from Guests"
+          @click="guestsChosen"
+        />
+      </li>
+    </ul>
+    <div class="back">
+      <i
+        class="fa-solid fa-chevron-left"
+        @click="$emit('emitChange','gallery')"
+      />
+    </div>
+  </div>
+  <div
+    v-else
+    class="main-body__gallery-tabs"
+  >
+    <ul>
+      <li>
+        <a :href="uploadGuestUrl">
+          <Button-Comp
+            button-type="main-body__tabs--C"
+            button-text="Upload"
+          />
         </a>
       </li>
       <li>
-        <a :href=downloadGuestUrl>
-          <Button-Comp button-type="main-body__tabs--D" buttonText="Download" />
+        <a :href="downloadGuestUrl">
+          <Button-Comp
+            button-type="main-body__tabs--D"
+            button-text="Download"
+          />
         </a>
       </li>
     </ul>
-    <div class="back">  
-      <i class="fa-solid fa-chevron-left" @click="isGuestButtonClicked=false;"></i>
+    <div class="back">
+      <i
+        class="fa-solid fa-chevron-left"
+        @click="isGuestButtonClicked=false;"
+      />
     </div>
-    <div class="info" v-show="linkValue!=='engagement'">
-      <i class="fa fa-info-circle" @click="triggerNotif"></i>
+    <div
+      v-show="linkValue!=='engagement'"
+      class="info"
+    >
+      <i
+        class="fa fa-info-circle"
+        @click="triggerNotif"
+      />
     </div>
   </div>
 </template>
@@ -47,7 +82,10 @@ export default {
   components: {
     ButtonComp,
   },
-  data () {
+  props: {
+    linkValue: String
+  },
+  data() {
     return {
       uploadGuestUrl: String,
       downloadGuestUrl: String,
@@ -86,9 +124,6 @@ export default {
       this.downloadGuestUrl="https://dhruvgupta.smugmug.com/Other-Functions/n-chFGSH"
     }
   },
-  props: {
-    linkValue: String
-  },
   methods: {
     guestsChosen() {
       this.isGuestButtonClicked=!this.isGuestButtonClicked;
@@ -96,11 +131,11 @@ export default {
         this.triggerNotif();
         // this.$emit('emitChange','guestGallery',this.linkValue)
         this.$router.push(`/guestGallery/${this.linkValue}`);
-        
+
       }
     },
     triggerNotif() {
-        this.$notify({
+      this.$notify({
         // title: "We want to share as many moments as possible!",
         text: "We would love to collect photos clicked by you! You can also download photos shared by other guests!",
         duration: 5000,
@@ -118,7 +153,7 @@ export default {
       width: 80%;
       opacity: 0;
       animation: appear 1s forwards;
-      
+
       .info {
         position: absolute;
         bottom: 0;
@@ -127,11 +162,11 @@ export default {
         font-size: 2.5rem;
         right: 0;
       }
-      ul { 
-        padding: 0px; 
-        margin: 0px; 
-        list-style: none; 
-        display: flex; 
+      ul {
+        padding: 0px;
+        margin: 0px;
+        list-style: none;
+        display: flex;
         flex-wrap: wrap;
         justify-content: center;
 
