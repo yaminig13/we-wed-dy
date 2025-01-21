@@ -1,0 +1,8 @@
+[
+    {
+      "origin": ["https://192.168.178.129:8080/guestGallery/","https://localhost:8080/guestGallery/"], 
+      "method": ["GET"],
+      "maxAgeSeconds": 3600,
+      "responseHeader": ["Content-Type", "Authorization"]
+    }
+  ]

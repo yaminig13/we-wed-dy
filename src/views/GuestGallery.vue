@@ -1,22 +1,35 @@
 <template>
   <v-overlay :model-value="isLoading">
-      <v-progress-circular
-        indeterminate
-        size="64"
-        color="primary"
-      ></v-progress-circular>
-    </v-overlay>
+    <v-progress-circular
+      indeterminate
+      size="64"
+      color="orange"
+    />
+  </v-overlay>
   <div class="ma-4 d-flex mb-8 justify-space-between">
-    <h1> {{ this.linkValue.charAt(0).toUpperCase() + String(this.linkValue).slice(1) }} </h1>
+    <h1> {{ linkValue.charAt(0).toUpperCase() + String(linkValue).slice(1) }} </h1>
     <div>
       <v-dialog max-width="500">
-        <template v-slot:activator="{ props: activatorProps }">
-          <v-btn v-bind="activatorProps" icon="fas fa-plus" size="small" color="orange"/>
+        <template #activator="{ props: activatorProps }">
+          <v-btn
+            v-bind="activatorProps"
+            icon="fas fa-plus"
+            size="small"
+            color="orange"
+          />
         </template>
-        <template v-slot:default="{ isActive }">
-          <v-card title="Upload Photo" color="black">
-            <template v-slot:append>
-              <v-btn icon="fa fa-close" @click="isActive.value=false" variant="text" size="smalls"></v-btn>
+        <template #default="{ isActive }">
+          <v-card
+            title="Upload Photo"
+            color="black"
+          >
+            <template #append>
+              <v-btn
+                icon="fa fa-close"
+                variant="text"
+                size="smalls"
+                @click="isActive.value=false"
+              />
             </template>
             <v-card-text>
               <v-file-input
@@ -27,19 +40,22 @@
                 accept="image/*"
                 multiple
                 chips
-              ></v-file-input>
+              />
             </v-card-text>
-              <v-btn
-                text="Upload"
-                color="orange"
-                @click="uploadFile"
-              ></v-btn>
+            <v-btn
+              text="Upload"
+              color="orange"
+              @click="uploadFile"
+            />
           </v-card>
         </template>
       </v-dialog>
     </div>
   </div>
-  <v-container fluid class="pa-4">
+  <v-container
+    fluid
+    class="pa-4"
+  >
     <v-row class="image-gallery">
       <v-col
         v-for="photo,index in photos"
@@ -47,9 +63,9 @@
         class="d-flex child-flex image-column"
         cols="3"
         :class="{
-            'no-left-padding': index % itemsPerRow === 0, /* First in row */
-            'no-right-padding': (index + 1) % itemsPerRow === 0, /* Last in row */
-          }"
+          'no-left-padding': index % itemsPerRow === 0, /* First in row */
+          'no-right-padding': (index + 1) % itemsPerRow === 0, /* Last in row */
+        }"
       >
         <v-img
           :lazy-src="photo.url"
@@ -57,9 +73,9 @@
           aspect-ratio="1"
           class="bg-grey-lighten-2"
           cover
-          @click="openPreview(photo.url)"
+          @click="openPreview(photo)"
         >
-          <template v-slot:placeholder>
+          <template #placeholder>
             <v-row
               align="center"
               class="fill-height ma-0"
@@ -68,31 +84,54 @@
               <v-progress-circular
                 color="grey-lighten-5"
                 indeterminate
-              ></v-progress-circular>
+              />
             </v-row>
           </template>
         </v-img>
       </v-col>
     </v-row>
     <!-- Image Preview Dialog -->
-    <v-dialog v-model="previewOpen" max-width="90%">
+    <v-dialog
+      v-model="previewOpen"
+      max-width="90%"
+    >
       <v-card color="black">
-          <v-img :src="selectedImage" aspect-ratio="1">
-            <v-btn class="close-icon" icon="fa fa-close" variant="flat" color="black" size="small" @click="previewOpen = false"></v-btn>
-          </v-img>
+        <v-img
+          :src="selectedImage.url"
+          aspect-ratio="1"
+        >
+          <div class="preview-image">
+            <v-btn
+              icon="fa fa-download"
+              variant="flat"
+              color="orange"
+              size="small"
+              @click="downloadFile(selectedImage)"
+            />
+            <v-btn
+              icon="fa fa-close"
+              variant="flat"
+              color="black"
+              size="small"
+              @click="previewOpen = false"
+            />
+          </div>
+        </v-img>
       </v-card> 
     </v-dialog>
   </v-container>
-
-  
 </template>
 
 <script>
 import { ref, listAll, getDownloadURL, uploadBytes } from "firebase/storage";
 import { storage } from "../firebase";
+import { saveAs } from "file-saver";
 
 export default {
   name: "GuestGallery",
+  props: {
+    linkValue: String
+  },
   data () {
     return {
         itemsPerRow: 4,
@@ -103,19 +142,16 @@ export default {
         selectedImage: ''
     }
   },
-  props: {
-    linkValue: String
+  mounted() {
+    this.fetchPhotos();
   },
   methods: {
-    test() {
-      console.log('hi')
-    },
-    openPreview(index) {
-      console.log(index)
-      this.selectedImage = index;
+    openPreview(photo) {
+      this.selectedImage = photo;
       this.previewOpen = true;
     },
     async fetchPhotos() {
+      this.isLoading = true;
       const folderRef = ref(storage, this.linkValue);
       try {
         const result = await listAll(folderRef);
@@ -124,19 +160,21 @@ export default {
           return { name: itemRef.name, url };
         });
         this.photos = await Promise.all(photoPromises);
+        this.isLoading = false;
       } catch (error) {
         console.error("Error fetching photos:", error);
       }
     },
     async uploadFile() {
       if (!this.uploadArray.length) {
-          alert("No file selected!");
+          alert("Please select a photo!");
           return;
       }
       try {
         this.isLoading = true;
         for (const file of this.uploadArray) {
           const storageRef = ref(storage, `${this.linkValue}/${file.name}`);
+          console.log(storageRef)
           await uploadBytes(storageRef, file);
         }
         alert("Photos uploaded successfully!");
@@ -146,18 +184,13 @@ export default {
           alert("File upload failed.");
         }
     },
-    async downloadFile(fileName) {
-           const storageRef = ref(storage, `uploads/${fileName}`);
-           try {
-               const url = await getDownloadURL(storageRef);
-               window.open(url, "_blank");
-           } catch (error) {
-               console.error("Error downloading file:", error);
-           }
+    async downloadFile(photo) {
+      await fetch(photo.url)
+        .then((response) => response.blob())
+        .then((blob) => {
+          saveAs(blob, photo.name);
+        });
        },
-  },
-  mounted() {
-    this.fetchPhotos();
   },
 }
 </script>
@@ -188,9 +221,15 @@ img {
   right: -60vw;
 }
 
-.close-icon {
+// .close-icon {
+//   margin: 10px;
+//   float: inline-end;
+// }
+
+.preview-image {
+  display: flex;
   margin: 10px;
-  float: inline-end;
+  justify-content: space-between;
 }
 
 </style>
