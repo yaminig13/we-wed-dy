@@ -89,7 +89,7 @@
           aspect-ratio="1"
           class="bg-grey-lighten-2"
           cover
-          @click="openPreview(photo)"
+          @click="handleClick(photo)"
         >
           <template #placeholder>
             <v-row
@@ -182,6 +182,19 @@ export default {
     this.fetchPhotos();
   },
   methods: {
+    handleClick(photo) {
+      if (!this.selectionMode) {
+        this.openPreview(photo);
+      }
+      else {
+        const indexOfPhoto = this.downloadArray.indexOf(photo);
+        if (indexOfPhoto !== -1) {
+          this.downloadArray.splice(indexOfPhoto, 1); // Unselect the photo
+        } else {
+          this.downloadArray.push(photo); // Select the photo
+        }
+      }
+    },
     toggleSelectionMode() {
       if (!this.selectionMode) {
         this.buttonSelected = 'orange';
@@ -257,6 +270,7 @@ export default {
           const zipBlob = await zip.generateAsync({ type: "blob" }); // Generate ZIP file
           saveAs(zipBlob, "WeWed.zip"); // Trigger download
           this.isLoading = false;
+          this.toggleSelectionMode();
         } catch (error) {
           console.error("Error generating ZIP file:", error);
           alert("Failed to download photos.");
