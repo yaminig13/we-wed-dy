@@ -31,6 +31,7 @@
           @click="downloadArrayFiles()"
         />
         <v-btn
+          v-if="photos.length"
           icon="fas fa-check"
           size="small"
           :color="buttonSelected"
@@ -84,7 +85,10 @@
       fluid
       class="pa-4"
     >
-      <v-row class="image-gallery">
+      <v-row
+        v-if="photos.length"
+        class="image-gallery"
+      >
         <v-col
           v-for="photo,index in photos"
           :key="photo.url"
@@ -133,6 +137,11 @@
           </v-img>
         </v-col>
       </v-row>
+      <v-else>
+        <h3>
+          No photos found
+        </h3>
+      </v-else>
       <!-- Image Preview Dialog -->
       <v-dialog
         v-model="previewOpen"
@@ -176,7 +185,6 @@
       </v-dialog>
 
       <!-- Delete Confirmation Dialog -->
-
       <v-dialog
         v-model="showDeleteDialog"
         max-width="90%"
