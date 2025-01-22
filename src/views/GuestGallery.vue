@@ -13,10 +13,10 @@
       </h1>
       <div>
         <v-btn
-          v-if="selectionMode"
+          v-if="selectionMode && !isPhotographerGallery"
           icon="fa fa-trash"
           variant="flat"
-          color="orange"
+          color="red"
           size="small"
           class="mr-2"
           @click="deleteClicked()"
@@ -164,6 +164,7 @@
                   @click="downloadFile(selectedImage)"
                 />
                 <v-btn
+                  v-if="!isPhotographerGallery"
                   icon="fa fa-trash"
                   variant="flat"
                   color="red"
@@ -248,6 +249,11 @@ export default {
       downloadArray: [],
       isDownloaded: false,
       showDeleteDialog: false
+    }
+  },
+  computed: {
+    isPhotographerGallery() {
+      return this.$route.name == 'PhotographerGallery'
     }
   },
   mounted() {
