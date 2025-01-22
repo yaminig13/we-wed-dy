@@ -197,7 +197,7 @@ export default {
 <style lang="less">
 .main-body {
     &__schedule-wrapper{
-        animation: appear 1s forwards;
+        // animation: appear 1s forwards;
         display: grid;
         grid-template-columns: 1fr 1fr;
 

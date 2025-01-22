@@ -67,8 +67,8 @@ export default {
 
     .main-body__gallery-tabs {
       width: 80%;
-      opacity: 0;
-      animation: appear 1s forwards;
+      // opacity: 0;
+      // animation: appear 1s forwards;
 
       .info {
         position: absolute;

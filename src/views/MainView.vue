@@ -2,7 +2,10 @@
   <div
     class="main-wrapper"
   >
-    <div class="main-body">
+    <div
+      class="main-body"
+      :class="{'first-time': isFirstTime}"
+    >
       <div
         v-if="!liveVisible"
         class="main-body__tabs"
@@ -102,7 +105,8 @@ export default {
   data() {
     return {
       showInstallNotif: false,
-      liveVisible: false
+      liveVisible: false,
+      isFirstTime: false,
     }
   },
   computed: {
@@ -128,6 +132,17 @@ export default {
         // 👇️ hides element (still takes up space on page)
         // box.style.visibility = 'hidden';
       }, 30000);
+    }
+  },
+  created() {
+    // Check if the app is loaded for the first time
+    if (!sessionStorage.getItem('firstVisit')) {
+      this.isFirstTime = true;
+      // Set a flag in localStorage to indicate the app has been accessed
+      sessionStorage.setItem('firstVisit', 'true');
+    }
+    else {
+      this.isFirstTime = false;
     }
   },
   methods: {
@@ -232,17 +247,18 @@ export default {
     to {opacity:1;}
   }
 
-  .main-body {
+  .main-body.first-time {
+    opacity: 0;
     animation: appear ;
     animation-duration: 1s;
     animation-delay: 2s;
     animation-fill-mode: forwards;
+  }
+  .main-body {
     display:flex;
     flex-direction: column;
     height: 50%;
     align-items: center;
-    opacity: 0;
-
 
     &__tabs {
       margin: auto 0 0 12px;

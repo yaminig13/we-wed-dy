@@ -85,8 +85,13 @@
       fluid
       class="pa-4"
     >
+      <div v-if="!photos.length && !isLoading">
+        <h3>
+          No photos found
+        </h3>
+      </div>
       <v-row
-        v-if="photos.length"
+        v-else
         class="image-gallery"
       >
         <v-col
@@ -137,11 +142,7 @@
           </v-img>
         </v-col>
       </v-row>
-      <v-else>
-        <h3>
-          No photos found
-        </h3>
-      </v-else>
+
       <!-- Image Preview Dialog -->
       <v-dialog
         v-model="previewOpen"
