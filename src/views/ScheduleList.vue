@@ -1,93 +1,89 @@
 <template>
-  <div class="main-body__schedule">
-    <div
-      class="atcb"
-      style="display:none;"
-    >
-      {{ JSON.stringify(eventData) }}
-    </div>
-    <div class="main-body__schedule-wrapper">
-      <div class="main-body__schedule-tabs event-bmd">
-        <div class="main-body__schedule-tabs--title">
-          Mehendi - Bride's side
-        </div>
-        <div class="main-body__schedule-tabs--time">
-          3rd December 2022, Noon
-        </div>
-        <button class="event-button">
-          <i class="far fa-calendar-alt" />
-          Add to calendar
-        </button>
+  <v-content class="fill-height">
+    <div class="wrapper">
+      <div
+        class="atcb"
+        style="display:none;"
+      >
+        {{ JSON.stringify(eventData) }}
       </div>
-      <div class="main-body__schedule-tabs event-gmd">
-        <div class="main-body__schedule-tabs--title">
-          Mehendi - Groom's side
+      <div class="main-body__schedule-wrapper">
+        <div class="main-body__schedule-tabs event-bmd">
+          <div class="main-body__schedule-tabs--title">
+            Mehendi - Bride's side
+          </div>
+          <div class="main-body__schedule-tabs--time">
+            3rd December 2022, Noon
+          </div>
+          <button class="event-button">
+            <i class="far fa-calendar-alt" />
+            Add to calendar
+          </button>
         </div>
-        <div class="main-body__schedule-tabs--time">
-          2nd December 2022, Noon
+        <div class="main-body__schedule-tabs event-gmd">
+          <div class="main-body__schedule-tabs--title">
+            Mehendi - Groom's side
+          </div>
+          <div class="main-body__schedule-tabs--time">
+            2nd December 2022, Noon
+          </div>
+          <button class="event-button">
+            <i class="far fa-calendar-alt" />
+            Add to calendar
+          </button>
         </div>
-        <button class="event-button">
-          <i class="far fa-calendar-alt" />
-          Add to calendar
-        </button>
-      </div>
 
-      <div class="main-body__schedule-tabs event-sgt">
-        <div class="main-body__schedule-tabs--title">
-          Sangeet Night
+        <div class="main-body__schedule-tabs event-sgt">
+          <div class="main-body__schedule-tabs--title">
+            Sangeet Night
+          </div>
+          <div class="main-body__schedule-tabs--time">
+            3rd December 2022, 1700 hrs
+          </div>
+          <button class="event-button">
+            <i class="far fa-calendar-alt" />
+            Add to calendar
+          </button>
         </div>
-        <div class="main-body__schedule-tabs--time">
-          3rd December 2022, 1700 hrs
+        <div class="main-body__schedule-tabs event-hdi">
+          <div class="main-body__schedule-tabs--title">
+            Pool-Side Haldi
+          </div>
+          <div class="main-body__schedule-tabs--time">
+            4th December 2022, 1030 hrs
+          </div>
+          <button class="event-button">
+            <i class="far fa-calendar-alt" />
+            Add to calendar
+          </button>
         </div>
-        <button class="event-button">
-          <i class="far fa-calendar-alt" />
-          Add to calendar
-        </button>
-      </div>
-      <div class="main-body__schedule-tabs event-hdi">
-        <div class="main-body__schedule-tabs--title">
-          Pool-Side Haldi
+        <div class="main-body__schedule-tabs event-rcp">
+          <div class="main-body__schedule-tabs--title">
+            Reception
+          </div>
+          <div class="main-body__schedule-tabs--time">
+            4th December 2022, 1900 hrs
+          </div>
+          <button class="event-button">
+            <i class="far fa-calendar-alt" />
+            Add to calendar
+          </button>
         </div>
-        <div class="main-body__schedule-tabs--time">
-          4th December 2022, 1030 hrs
+        <div class="main-body__schedule-tabs event-wdg">
+          <div class="main-body__schedule-tabs--title">
+            Wedding
+          </div>
+          <div class="main-body__schedule-tabs--time">
+            4th December 2022, 2300 hrs
+          </div>
+          <button class="event-button">
+            <i class="far fa-calendar-alt" />
+            Add to calendar
+          </button>
         </div>
-        <button class="event-button">
-          <i class="far fa-calendar-alt" />
-          Add to calendar
-        </button>
-      </div>
-      <div class="main-body__schedule-tabs event-rcp">
-        <div class="main-body__schedule-tabs--title">
-          Reception
-        </div>
-        <div class="main-body__schedule-tabs--time">
-          4th December 2022, 1900 hrs
-        </div>
-        <button class="event-button">
-          <i class="far fa-calendar-alt" />
-          Add to calendar
-        </button>
-      </div>
-      <div class="main-body__schedule-tabs event-wdg">
-        <div class="main-body__schedule-tabs--title">
-          Wedding
-        </div>
-        <div class="main-body__schedule-tabs--time">
-          4th December 2022, 2300 hrs
-        </div>
-        <button class="event-button">
-          <i class="far fa-calendar-alt" />
-          Add to calendar
-        </button>
       </div>
     </div>
-    <div class="back">
-      <i
-        class="fa-solid fa-chevron-left"
-        @click="$emit('emitChange','main')"
-      />
-    </div>
-  </div>
+  </v-content>
 </template>
 
 <script>
@@ -200,15 +196,6 @@ export default {
 </script>
 <style lang="less">
 .main-body {
-
-    .back {
-        position: absolute;
-        top: 7rem;
-        left: 1rem;
-        font-size: xx-large;
-        color: orange;
-    }
-
     &__schedule-wrapper{
         animation: appear 1s forwards;
         display: grid;
@@ -259,16 +246,6 @@ export default {
             font-size: .75rem;
         }
 
-    }
-
-    .back {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 2rem;
-        color: orange;
-        grid-column: 1/3;
-        cursor: pointer;
     }
 }
 

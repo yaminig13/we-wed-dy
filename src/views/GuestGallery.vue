@@ -1,156 +1,160 @@
 <template>
-  <v-overlay :model-value="isLoading">
-    <v-progress-circular
-      indeterminate
-      size="64"
-      color="orange"
-    />
-  </v-overlay>
-  <div class="ma-4 d-flex mb-8 justify-space-between">
-    <h1> {{ linkValue.charAt(0).toUpperCase() + String(linkValue).slice(1) }} </h1>
-    <div>
-      <v-btn
-        v-if="selectionMode"
-        icon="fa fa-download"
-        variant="flat"
+  <v-content class="fill-height">
+    <v-overlay :model-value="isLoading">
+      <v-progress-circular
+        indeterminate
+        size="64"
         color="orange"
-        size="small"
-        class="mr-2"
-        @click="downloadArrayFiles()"
       />
-      <v-btn
-        icon="fas fa-check"
-        size="small"
-        :color="buttonSelected"
-        class="mr-2"
-        @click="toggleSelectionMode"
-      />
-      <v-dialog max-width="500">
-        <template #activator="{ props: activatorProps }">
-          <v-btn
-            v-bind="activatorProps"
-            icon="fas fa-plus"
-            size="small"
-            color="orange"
-          />
-        </template>
-        <template #default="{ isActive }">
-          <v-card
-            title="Upload Photo"
-            color="black"
+    </v-overlay>
+    <div class="ma-4 d-flex mb-8 justify-space-between">
+      <h1>
+        {{ linkValue.charAt(0).toUpperCase() + String(linkValue).slice(1) }}
+      </h1>
+      <div>
+        <v-btn
+          v-if="selectionMode"
+          icon="fa fa-download"
+          variant="flat"
+          color="orange"
+          size="small"
+          class="mr-2"
+          @click="downloadArrayFiles()"
+        />
+        <v-btn
+          icon="fas fa-check"
+          size="small"
+          :color="buttonSelected"
+          class="mr-2"
+          @click="toggleSelectionMode"
+        />
+        <v-dialog max-width="500">
+          <template #activator="{ props: activatorProps }">
+            <v-btn
+              v-bind="activatorProps"
+              icon="fas fa-plus"
+              size="small"
+              color="orange"
+            />
+          </template>
+          <template #default="{ isActive }">
+            <v-card
+              title="Upload Photo"
+              color="black"
+            >
+              <template #append>
+                <v-btn
+                  icon="fa fa-close"
+                  variant="text"
+                  size="smalls"
+                  @click="isActive.value=false"
+                />
+              </template>
+              <v-card-text>
+                <v-file-input
+                  v-model="uploadArray"
+                  label="Select Photo"
+                  prepend-icon="fa-solid fa-camera"
+                  variant="filled"
+                  accept="image/*"
+                  multiple
+                  chips
+                />
+              </v-card-text>
+              <v-btn
+                text="Upload"
+                color="orange"
+                @click="uploadFile"
+              />
+            </v-card>
+          </template>
+        </v-dialog>
+      </div>
+    </div>
+    <v-container
+      fluid
+      class="pa-4"
+    >
+      <v-row class="image-gallery">
+        <v-col
+          v-for="photo,index in photos"
+          :key="photo.url"
+          class="d-flex child-flex image-column"
+          cols="3"
+          :class="{
+            'no-left-padding': index % itemsPerRow === 0, /* First in row */
+            'no-right-padding': (index + 1) % itemsPerRow === 0, /* Last in row */
+          }"
+        >
+          <v-img
+            :lazy-src="photo.url"
+            :src="photo.url"
+            aspect-ratio="1"
+            class="bg-grey-lighten-2"
+            cover
+            @click="handleClick(photo)"
           >
-            <template #append>
+            <template #placeholder>
+              <v-row
+                align="center"
+                class="fill-height ma-0"
+                justify="center"
+              >
+                <v-progress-circular
+                  color="grey-lighten-5"
+                  indeterminate
+                />
+              </v-row>
+            </template>
+
+            <!-- Show Checkbox in Selection Mode -->
+            <template #default>
+              <div
+                v-if="selectionMode"
+                class="overlay"
+              >
+                <v-checkbox
+                  v-model="downloadArray"
+                  :value="photo"
+                  hide-details
+                  class="checkbox"
+                />
+              </div>
+            </template>
+          </v-img>
+        </v-col>
+      </v-row>
+      <!-- Image Preview Dialog -->
+      <v-dialog
+        v-model="previewOpen"
+        max-width="90%"
+      >
+        <v-card color="black">
+          <v-img
+            :src="selectedImage.url"
+            aspect-ratio="1"
+          >
+            <div class="preview-image">
+              <v-btn
+                icon="fa fa-download"
+                variant="flat"
+                color="orange"
+                size="small"
+                @click="downloadFile(selectedImage)"
+              />
               <v-btn
                 icon="fa fa-close"
-                variant="text"
-                size="smalls"
-                @click="isActive.value=false"
-              />
-            </template>
-            <v-card-text>
-              <v-file-input
-                v-model="uploadArray"
-                label="Select Photo"
-                prepend-icon="fa-solid fa-camera"
-                variant="filled"
-                accept="image/*"
-                multiple
-                chips
-              />
-            </v-card-text>
-            <v-btn
-              text="Upload"
-              color="orange"
-              @click="uploadFile"
-            />
-          </v-card>
-        </template>
-      </v-dialog>
-    </div>
-  </div>
-  <v-container
-    fluid
-    class="pa-4"
-  >
-    <v-row class="image-gallery">
-      <v-col
-        v-for="photo,index in photos"
-        :key="photo.url"
-        class="d-flex child-flex image-column"
-        cols="3"
-        :class="{
-          'no-left-padding': index % itemsPerRow === 0, /* First in row */
-          'no-right-padding': (index + 1) % itemsPerRow === 0, /* Last in row */
-        }"
-      >
-        <v-img
-          :lazy-src="photo.url"
-          :src="photo.url"
-          aspect-ratio="1"
-          class="bg-grey-lighten-2"
-          cover
-          @click="handleClick(photo)"
-        >
-          <template #placeholder>
-            <v-row
-              align="center"
-              class="fill-height ma-0"
-              justify="center"
-            >
-              <v-progress-circular
-                color="grey-lighten-5"
-                indeterminate
-              />
-            </v-row>
-          </template>
-
-          <!-- Show Checkbox in Selection Mode -->
-          <template #default>
-            <div
-              v-if="selectionMode"
-              class="overlay"
-            >
-              <v-checkbox
-                v-model="downloadArray"
-                :value="photo"
-                hide-details
-                class="checkbox"
+                variant="flat"
+                color="black"
+                size="small"
+                @click="previewOpen = false"
               />
             </div>
-          </template>
-        </v-img>
-      </v-col>
-    </v-row>
-    <!-- Image Preview Dialog -->
-    <v-dialog
-      v-model="previewOpen"
-      max-width="90%"
-    >
-      <v-card color="black">
-        <v-img
-          :src="selectedImage.url"
-          aspect-ratio="1"
-        >
-          <div class="preview-image">
-            <v-btn
-              icon="fa fa-download"
-              variant="flat"
-              color="orange"
-              size="small"
-              @click="downloadFile(selectedImage)"
-            />
-            <v-btn
-              icon="fa fa-close"
-              variant="flat"
-              color="black"
-              size="small"
-              @click="previewOpen = false"
-            />
-          </div>
-        </v-img>
-      </v-card>
-    </v-dialog>
-  </v-container>
+          </v-img>
+        </v-card>
+      </v-dialog>
+    </v-container>
+  </v-content>
 </template>
 
 <script>
@@ -162,7 +166,7 @@ import JSZip from "jszip";
 export default {
   name: "GuestGallery",
   props: {
-    linkValue: String
+    linkValue: String,
   },
   data() {
     return {
@@ -175,7 +179,7 @@ export default {
       selectionMode: false,
       buttonSelected: 'beige',
       downloadArray: [],
-      isDownloaded: false
+      isDownloaded: false,
     }
   },
   mounted() {
@@ -212,7 +216,7 @@ export default {
     },
     async fetchPhotos() {
       this.isLoading = true;
-      const folderRef = ref(storage, this.linkValue);
+      const folderRef = ref(storage, this.$route.name+'/'+this.linkValue);
       try {
         const result = await listAll(folderRef);
         const photoPromises = result.items.map(async(itemRef) => {
@@ -233,7 +237,7 @@ export default {
       try {
         this.isLoading = true;
         for (const file of this.uploadArray) {
-          const storageRef = ref(storage, `${this.linkValue}/${file.name}`);
+          const storageRef = ref(storage, `${this.$route.name}/${this.linkValue}/${file.name}`);
           console.log(storageRef)
           await uploadBytes(storageRef, file);
         }

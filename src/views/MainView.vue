@@ -1,31 +1,30 @@
 <template>
   <div
     class="main-wrapper"
-    :class="{'large-wrapper':isScheduleView}"
   >
     <div class="main-body">
       <div
-        v-if="isMainView && !liveVisible"
+        v-if="!liveVisible"
         class="main-body__tabs"
       >
         <ul>
           <li>
-            <Button-Comp
-              button-icon="far fa-calendar-alt"
-              button-type="main-body__tabs--schedule"
-              button-text="Schedule"
-              @click="changeView('schedule')"
-            />
+            <router-link to="/schedule">
+              <Button-Comp
+                button-icon="far fa-calendar-alt"
+                button-type="main-body__tabs--schedule"
+                button-text="Schedule"
+              />
+            </router-link>
           </li>
           <li>
-            <!-- <router-link to="/imageGallery"> -->
-            <Button-Comp
-              button-icon="fas fa-images"
-              button-type="main-body__tabs--gallery"
-              button-text="Gallery"
-              @click="changeView('gallery')"
-            />
-            <!-- </router-link> -->
+            <router-link to="/gallery">
+              <Button-Comp
+                button-icon="fas fa-images"
+                button-type="main-body__tabs--gallery"
+                button-text="Gallery"
+              />
+            </router-link>
           </li>
           <li>
             <a href="https://maps.app.goo.gl/aJ3t7gXUnWjrPi5f6?g_st=iw">
@@ -52,27 +51,6 @@
         </ul>
       </div>
 
-      <Image-Gallery
-        v-if="isGalleryView"
-        @emitChange="changeView"
-      />
-
-      <Schedule-List
-        v-if="isScheduleView"
-        @emitChange="changeView"
-      />
-
-      <image-gallery-selection
-        v-if="isGallerySelectionView"
-        :link-value="linkValue"
-        @emitChange="changeView"
-      />
-
-      <guest-gallery
-        v-if="isGuestGalleryView"
-        :link-value="linkValue"
-        @emitChange="changeView"
-      />
       <div
         v-show="showInstallNotif"
         ref="installNotif"
@@ -114,30 +92,15 @@
 </template>
 
 <script>
-import GuestGallery from "@/views/GuestGallery.vue";
 import ButtonComp from "../components/ButtonComp.vue";
-import ImageGallery from "../components/ImageGallery.vue";
-import ImageGallerySelection from "../components/ImageGallerySelection.vue";
-import ScheduleList from "@/components/ScheduleList.vue";
 
 export default {
   name: "MainView",
   components: {
     ButtonComp,
-    ImageGallery,
-    ScheduleList,
-    ImageGallerySelection,
-    GuestGallery
   },
   data() {
     return {
-      isGalleryView: false,
-      isMainView: true,
-      isScheduleView: false,
-      isGallerySelectionView: false,
-      isGuestGalleryView: false,
-      eventData: {},
-      linkValue: '',
       showInstallNotif: false,
       liveVisible: false
     }
@@ -178,30 +141,6 @@ export default {
     triggerNotif() {
       this.liveVisible=true;
       document.body.classList.add('blur');
-    },
-    changeView(view, button) {
-      this.isMainView=false;
-      this.isGalleryView=false;
-      this.isScheduleView=false;
-      this.isGallerySelectionView=false;
-      this.isGuestGalleryView=false;
-      if (view=="gallery-selection") {
-        this.isGallerySelectionView=true;
-        this.linkValue=button;
-      }
-      if (view=="schedule") {
-        this.isScheduleView=true;
-      }
-      if (view=="gallery") {
-        this.isGalleryView=true;
-      }
-      if (view=="main") {
-        this.isMainView=true;
-      }
-      if (view=="guestGallery") {
-        this.isGuestGalleryView = true;
-        this.linkValue = button;
-      }
     }
   }
 };

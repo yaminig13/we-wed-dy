@@ -1,10 +1,12 @@
 <template>
-  <notifications
-    position="bottom center"
-    classes="alert"
-  />
-  <Main-Header />
-  <router-view />
+  <v-app>
+    <notifications
+      position="bottom center"
+      classes="alert"
+    />
+    <Main-Header />
+    <router-view />
+  </v-app>
 </template>
 
 <script>
@@ -33,14 +35,16 @@ export default {
 }
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  margin: 0px;
-  background: url("assets/bg_reduced.jpg") no-repeat center center fixed;
-  background-size: cover;
-}
+// body {
+//   background: url("assets/bg_reduced.jpg") no-repeat center center fixed;
+//   background-size: cover;
+//   height: 100vh;
+// }
 
 .blur {
   backdrop-filter: blur(10px);
@@ -66,14 +70,14 @@ body {
   }
 }
 
-#app {
+.v-application {
   // font-family: Avenir, Helvetica, Arial, sans-serif;
   font-family: Lobster;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: beige;
-  height: 100vh;
-
+  background: url("assets/bg_reduced.jpg") no-repeat center center fixed;
+  background-size: cover;
 }
 
 @keyframes fadein { from { opacity:0; } to { opacity:1; } }
