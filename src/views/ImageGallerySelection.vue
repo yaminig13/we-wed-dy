@@ -39,48 +39,12 @@ export default {
   },
   data() {
     return {
-      // uploadGuestUrl: String,
-      // downloadGuestUrl: String,
-      // photoUrl: String,
-      // isGuestButtonClicked: false,
     }
-  },
-  mounted() {
-    // if (this.linkValue=="engagement") {
-    //   this.photoUrl="https://photos.app.goo.gl/9vMPMxzu68A7h4i58";
-    //   this.uploadGuestUrl="https://photos.app.goo.gl/9vMPMxzu68A7h4i58";
-    // }
-    // if (this.linkValue=="haldi") {
-    //   this.photoUrl="https://photos.app.goo.gl/PPW4PxDAykQ2fDfy9";
-    //   this.uploadGuestUrl="https://dhruvgupta.smugmug.com/upload/4ccCcs/dhruvyaminihaldi";
-    //   this.downloadGuestUrl="https://dhruvgupta.smugmug.com/Haldi/n-xs7rv4"
-    // }
-    // if (this.linkValue=="mehendi") {
-    //   this.photoUrl="https://photos.app.goo.gl/CvYJ5H8s58LihvPH9";
-    //   this.uploadGuestUrl="https://dhruvgupta.smugmug.com/upload/9SBndc/dhruvyaminimehendi";
-    //   this.downloadGuestUrl="https://dhruvgupta.smugmug.com/Mehendi/n-tXC6tg"
-    // }
-    // if (this.linkValue=="sangeet") {
-    //   this.photoUrl="https://photos.app.goo.gl/jGonE48y4Xy3rLzo6";
-    //   this.uploadGuestUrl="https://dhruvgupta.smugmug.com/upload/VbF4mm/dhruvyaminisangeet";
-    //   this.downloadGuestUrl="https://dhruvgupta.smugmug.com/Sangeet/n-2C3mS9"
-    // }
-    // if (this.linkValue=="wedding") {
-    //   this.photoUrl="https://photos.app.goo.gl/CSkpmwErZWMXKznx5";
-    //   this.uploadGuestUrl="https://dhruvgupta.smugmug.com/upload/5FPZWf/dhruvyaminiwedding";
-    //   this.downloadGuestUrl="https://dhruvgupta.smugmug.com/Wedding-Reception/n-fkD4PK"
-    // }
-    // if (this.linkValue=="other") {
-    //   this.photoUrl="https://photos.app.goo.gl/MZf93LNkFNpz9AAh7";
-    //   this.uploadGuestUrl="https://dhruvgupta.smugmug.com/upload/d59c7s/dhruvyaminisonstiges";
-    //   this.downloadGuestUrl="https://dhruvgupta.smugmug.com/Other-Functions/n-chFGSH"
-    // }
   },
   methods: {
     guestsChosen() {
       if (this.linkValue!=='engagement') {
         this.triggerNotif();
-        // this.$emit('emitChange','guestGallery',this.linkValue)
         this.$router.push({ name: 'GuestGallery', params: { linkValue: this.linkValue } });
 
       }

@@ -158,7 +158,6 @@ export default {
   }
 }
 
-
 .live-notif {
   background: black;
   color: orange;

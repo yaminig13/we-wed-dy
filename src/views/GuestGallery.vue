@@ -14,6 +14,15 @@
       <div>
         <v-btn
           v-if="selectionMode"
+          icon="fa fa-trash"
+          variant="flat"
+          color="orange"
+          size="small"
+          class="mr-2"
+          @click="deleteClicked()"
+        />
+        <v-btn
+          v-if="selectionMode"
           icon="fa fa-download"
           variant="flat"
           color="orange"
@@ -135,22 +144,71 @@
             aspect-ratio="1"
           >
             <div class="preview-image">
-              <v-btn
-                icon="fa fa-download"
-                variant="flat"
-                color="orange"
-                size="small"
-                @click="downloadFile(selectedImage)"
-              />
-              <v-btn
-                icon="fa fa-close"
-                variant="flat"
-                color="black"
-                size="small"
-                @click="previewOpen = false"
-              />
+              <div class="left-buttons">
+                <v-btn
+                  icon="fa fa-download"
+                  variant="flat"
+                  color="orange"
+                  size="small"
+                  class="mr-2"
+                  @click="downloadFile(selectedImage)"
+                />
+                <v-btn
+                  icon="fa fa-trash"
+                  variant="flat"
+                  color="red"
+                  size="small"
+                  @click="deleteFile(selectedImage)"
+                />
+              </div>
+              <div class="right-buttons">
+                <v-btn
+                  icon="fa fa-close"
+                  variant="flat"
+                  color="black"
+                  size="small"
+                  @click="previewOpen = false"
+                />
+              </div>
             </div>
           </v-img>
+        </v-card>
+      </v-dialog>
+
+      <!-- Delete Confirmation Dialog -->
+
+      <v-dialog
+        v-model="showDeleteDialog"
+        max-width="90%"
+      >
+        <v-card color="black">
+          <v-card-item>
+            <div>
+              <div class="text-h6 mb-1">
+                Delete
+              </div>
+              <div>
+                Are you sure you want to delete the selected items?
+              </div>
+            </div>
+          </v-card-item>
+
+          <v-card-actions>
+            <v-btn
+              color="red"
+              variant="elevated"
+              @click="deleteArrayFiles()"
+            >
+              Yes
+            </v-btn>
+            <v-btn
+              color="success"
+              variant="elevated"
+              @click="showDeleteDialog=false"
+            >
+              No
+            </v-btn>
+          </v-card-actions>
         </v-card>
       </v-dialog>
     </v-container>
@@ -158,7 +216,7 @@
 </template>
 
 <script>
-import { ref, listAll, getDownloadURL, uploadBytes } from "firebase/storage";
+import { ref as firebaseRef, listAll, getDownloadURL, uploadBytes, deleteObject, getStorage } from "firebase/storage";
 import { storage } from "../firebase";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
@@ -180,12 +238,49 @@ export default {
       buttonSelected: 'beige',
       downloadArray: [],
       isDownloaded: false,
+      showDeleteDialog: false
     }
   },
   mounted() {
     this.fetchPhotos();
   },
   methods: {
+    deleteFile(file) {
+      const storage = getStorage();
+      const fileRef= firebaseRef(storage, this.$route.name+'/'+this.linkValue+'/'+file.name);
+      deleteObject(fileRef)
+        .then(() => {
+          alert("Photo deleted successfully");
+          this.$router.go();
+        })
+        .catch((error) => {
+          console.error("Error deleting photo:", error);
+        });
+    },
+    deleteClicked() {
+      if (this.downloadArray.length>0) {
+        this.showDeleteDialog = true;
+      }
+      else {
+        alert('Please select a photo')
+      }
+    },
+    deleteArrayFiles() {
+      this.isLoading = true;
+      const storage = getStorage();
+      for (const file of this.downloadArray) {
+        const fileRef= firebaseRef(storage, this.$route.name+'/'+this.linkValue+'/'+file.name);
+        deleteObject(fileRef)
+          .then(() => {
+            console.log("Photo deleted successfully");
+          })
+          .catch((error) => {
+            console.error("Error deleting photo:", error);
+          });
+      }
+      this.$router.go();
+      alert("Photos deleted successfully");
+    },
     handleClick(photo) {
       if (!this.selectionMode) {
         this.openPreview(photo);
@@ -216,7 +311,7 @@ export default {
     },
     async fetchPhotos() {
       this.isLoading = true;
-      const folderRef = ref(storage, this.$route.name+'/'+this.linkValue);
+      const folderRef = firebaseRef(storage, this.$route.name+'/'+this.linkValue);
       try {
         const result = await listAll(folderRef);
         const photoPromises = result.items.map(async(itemRef) => {
@@ -237,7 +332,7 @@ export default {
       try {
         this.isLoading = true;
         for (const file of this.uploadArray) {
-          const storageRef = ref(storage, `${this.$route.name}/${this.linkValue}/${file.name}`);
+          const storageRef = firebaseRef(storage, `${this.$route.name}/${this.linkValue}/${file.name}`);
           console.log(storageRef)
           await uploadBytes(storageRef, file);
         }
@@ -254,6 +349,7 @@ export default {
         .then((response) => response.blob())
         .then((blob) => {
           saveAs(blob, photo.name);
+          this.previewOpen = false;
         })
     },
     async downloadArrayFiles() {
@@ -279,6 +375,9 @@ export default {
           console.error("Error generating ZIP file:", error);
           alert("Failed to download photos.");
         }
+      }
+      else {
+        alert('Please select a photo')
       }
     }
   },

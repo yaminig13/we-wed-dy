@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :class="isGalleryView?'blur':''">
     <notifications
       position="bottom center"
       classes="alert"
@@ -16,6 +16,11 @@ export default {
   name: "App",
   components: {
     MainHeader,
+  },
+  computed: {
+    isGalleryView() {
+      return this.$route.name === 'GuestGallery' || this.$route.name === 'PhotographerGallery';
+    },
   },
 };
 </script>
@@ -47,7 +52,9 @@ export default {
 // }
 
 .blur {
-  backdrop-filter: blur(10px);
+  .v-application__wrap {
+    backdrop-filter: blur(15px);
+  }
 }
 
 .bg-light{
