@@ -38,7 +38,10 @@
           class="mr-2"
           @click="toggleSelectionMode"
         />
-        <v-dialog max-width="500">
+        <v-dialog
+          v-if="!isPhotographerGallery"
+          max-width="500"
+        >
           <template #activator="{ props: activatorProps }">
             <v-btn
               v-bind="activatorProps"
