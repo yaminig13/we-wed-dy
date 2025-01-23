@@ -12,7 +12,7 @@
         {{ linkValue.charAt(0).toUpperCase() + String(linkValue).slice(1) }}
       </h1>
       <div>
-        <v-btn
+        <!-- <v-btn
           v-if="selectionMode && !isPhotographerGallery"
           icon="fa fa-trash"
           variant="flat"
@@ -20,7 +20,7 @@
           size="small"
           class="mr-2"
           @click="deleteClicked()"
-        />
+        /> -->
         <v-btn
           v-if="selectionMode"
           icon="fa fa-download"
@@ -166,14 +166,14 @@
                   class="mr-2"
                   @click="downloadFile(selectedImage)"
                 />
-                <v-btn
+                <!-- <v-btn
                   v-if="!isPhotographerGallery"
                   icon="fa fa-trash"
                   variant="flat"
                   color="red"
                   size="small"
                   @click="deleteFile(selectedImage)"
-                />
+                /> -->
               </div>
               <div class="right-buttons">
                 <v-btn
@@ -190,7 +190,7 @@
       </v-dialog>
 
       <!-- Delete Confirmation Dialog -->
-      <v-dialog
+      <!-- <v-dialog
         v-model="showDeleteDialog"
         max-width="90%"
       >
@@ -223,13 +223,13 @@
             </v-btn>
           </v-card-actions>
         </v-card>
-      </v-dialog>
+      </v-dialog> -->
     </v-container>
   </v-content>
 </template>
 
 <script>
-import { ref as firebaseRef, listAll, getDownloadURL, uploadBytes, deleteObject, getStorage } from "firebase/storage";
+import { ref as firebaseRef, listAll, getDownloadURL, uploadBytes } from "firebase/storage";
 import { storage } from "../firebase";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
@@ -251,7 +251,7 @@ export default {
       buttonSelected: 'beige',
       downloadArray: [],
       isDownloaded: false,
-      showDeleteDialog: false
+      // showDeleteDialog: false
     }
   },
   computed: {
@@ -263,42 +263,42 @@ export default {
     this.fetchPhotos();
   },
   methods: {
-    deleteFile(file) {
-      const storage = getStorage();
-      const fileRef= firebaseRef(storage, this.$route.name+'/'+this.linkValue+'/'+file.name);
-      deleteObject(fileRef)
-        .then(() => {
-          alert("Photo deleted successfully");
-          this.$router.go();
-        })
-        .catch((error) => {
-          console.error("Error deleting photo:", error);
-        });
-    },
-    deleteClicked() {
-      if (this.downloadArray.length>0) {
-        this.showDeleteDialog = true;
-      }
-      else {
-        alert('Please select a photo')
-      }
-    },
-    deleteArrayFiles() {
-      this.isLoading = true;
-      const storage = getStorage();
-      for (const file of this.downloadArray) {
-        const fileRef= firebaseRef(storage, this.$route.name+'/'+this.linkValue+'/'+file.name);
-        deleteObject(fileRef)
-          .then(() => {
-            console.log("Photo deleted successfully");
-          })
-          .catch((error) => {
-            console.error("Error deleting photo:", error);
-          });
-      }
-      this.$router.go();
-      alert("Photos deleted successfully");
-    },
+    // deleteFile(file) {
+    //   const storage = getStorage();
+    //   const fileRef= firebaseRef(storage, this.$route.name+'/'+this.linkValue+'/'+file.name);
+    //   deleteObject(fileRef)
+    //     .then(() => {
+    //       alert("Photo deleted successfully");
+    //       this.$router.go();
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error deleting photo:", error);
+    //     });
+    // },
+    // deleteClicked() {
+    //   if (this.downloadArray.length>0) {
+    //     this.showDeleteDialog = true;
+    //   }
+    //   else {
+    //     alert('Please select a photo')
+    //   }
+    // },
+    // deleteArrayFiles() {
+    //   this.isLoading = true;
+    //   const storage = getStorage();
+    //   for (const file of this.downloadArray) {
+    //     const fileRef= firebaseRef(storage, this.$route.name+'/'+this.linkValue+'/'+file.name);
+    //     deleteObject(fileRef)
+    //       .then(() => {
+    //         console.log("Photo deleted successfully");
+    //       })
+    //       .catch((error) => {
+    //         console.error("Error deleting photo:", error);
+    //       });
+    //   }
+    //   this.$router.go();
+    //   alert("Photos deleted successfully");
+    // },
     handleClick(photo) {
       if (!this.selectionMode) {
         this.openPreview(photo);
