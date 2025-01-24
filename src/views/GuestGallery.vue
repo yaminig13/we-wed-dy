@@ -471,7 +471,6 @@ img {
 .sticky {
   position: sticky;
   top: 0;
-  background-color: black;
   padding: 1rem;
   z-index: 1;
 }

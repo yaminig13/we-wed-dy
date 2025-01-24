@@ -1,5 +1,14 @@
 <template>
   <div class="main-header">
+    <v-fab
+      v-if="!isMainView"
+      icon="fa-solid fa-chevron-left"
+      color="orange"
+      variant="text"
+      class="back-button"
+      density="compact"
+      @click="$router.go(-1)"
+    />
     <div class="main-header__names">
       <div class="main-header__names--bride-name">
         {{ bride }}
@@ -37,6 +46,11 @@ export default {
       hashtag_2: "#YaminiKaDhruvTara",
       backgroundImage: "/src/assets/bg-desktop.jpg",
     };
+  },
+  computed: {
+    isMainView() {
+      return this.$route.name === 'MainView';
+    },
   },
 };
 </script>
@@ -157,6 +171,11 @@ export default {
       }
     }
   }
+}
+.back-button {
+  position: absolute;
+  top: 55px;
+  margin-left: 5px;
 }
 
 

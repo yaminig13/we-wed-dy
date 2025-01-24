@@ -30,7 +30,7 @@ const vuetify = createVuetify({
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', component: MainView },
+    { path: '/', name: 'MainView', component: MainView },
     { path: '/schedule/', component: ScheduleList },
     { path: '/guestGallery/:linkValue', name: 'GuestGallery', component: GuestGallery, props: true },
     { path: '/photographerGallery/:linkValue', name: 'PhotographerGallery', component: GuestGallery, props: true },
