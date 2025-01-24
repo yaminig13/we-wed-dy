@@ -53,20 +53,6 @@
           </li>
         </ul>
       </div>
-
-      <div
-        v-show="showInstallNotif"
-        ref="installNotif"
-        v-click-outside="clickedOutside"
-        class="install-notif__wrapper"
-      >
-        <div class="install-notif">
-          Install this webapp on your iOS device from Safari: Tap <i class="fa-solid fa-arrow-up-from-bracket" />
-          and then 'Add to Homescreen'
-        </div>
-
-        <i class="fa-solid fa-caret-down" />
-      </div>
     </div>
   </div>
 
@@ -104,34 +90,8 @@ export default {
   },
   data() {
     return {
-      showInstallNotif: false,
       liveVisible: false,
       isFirstTime: false,
-    }
-  },
-  computed: {
-    isIOS() {
-      const userAgent = window.navigator.userAgent.toLowerCase();
-      return /iphone|ipad|ipod/.test(userAgent);
-    },
-    isApp() {
-      return (('standalone' in window.navigator) && (window.navigator.standalone));
-    }
-  },
-  mounted() {
-    if (this.isIOS && !this.isApp) {
-      this.showInstallNotif=true;
-    }
-    if (this.showInstallNotif) {
-      setTimeout(() => {
-        // const box = document.getElementById('box');
-        const box = this.$refs.installNotif;
-        // 👇️ removes element from DOM
-        box.style.display = 'none';
-
-        // 👇️ hides element (still takes up space on page)
-        // box.style.visibility = 'hidden';
-      }, 30000);
     }
   },
   created() {
@@ -146,9 +106,6 @@ export default {
     }
   },
   methods: {
-    clickedOutside() {
-      this.showInstallNotif = false;
-    },
     hideNotif() {
       this.liveVisible = false;
       document.body.classList.remove('blur');
