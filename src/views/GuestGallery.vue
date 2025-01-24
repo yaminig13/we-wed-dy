@@ -11,8 +11,12 @@
       <h1>
         {{ linkValue.charAt(0).toUpperCase() + String(linkValue).slice(1) }}
       </h1>
-      <div>
-        <!-- <v-btn
+    </div>
+    <div
+      v-if="!isLoading && photos.length"
+      class="sticky"
+    >
+      <!-- <v-btn
           v-if="selectionMode && !isPhotographerGallery"
           icon="fa fa-trash"
           variant="flat"
@@ -21,72 +25,77 @@
           class="mr-2"
           @click="deleteClicked()"
         /> -->
-        <v-btn
-          v-if="selectionMode"
-          icon="fa fa-download"
-          variant="flat"
-          color="orange"
-          size="small"
-          class="mr-2"
-          @click="downloadArrayFiles()"
-        />
-        <v-btn
-          v-if="photos.length"
-          icon="fas fa-check"
-          size="small"
-          :color="buttonSelected"
-          class="mr-2"
-          @click="toggleSelectionMode"
-        />
-        <v-dialog
-          v-if="!isPhotographerGallery"
-          max-width="500"
-        >
-          <template #activator="{ props: activatorProps }">
-            <v-btn
-              v-bind="activatorProps"
-              icon="fas fa-plus"
-              size="small"
-              color="orange"
-            />
-          </template>
-          <template #default="{ isActive }">
-            <v-card
-              title="Upload Photo"
-              color="black"
-            >
-              <template #append>
-                <v-btn
-                  icon="fa fa-close"
-                  variant="text"
-                  size="smalls"
-                  @click="isActive.value=false"
-                />
-              </template>
-              <v-card-text>
-                <v-file-input
-                  v-model="uploadArray"
-                  label="Select Photo"
-                  prepend-icon="fa-solid fa-camera"
-                  variant="filled"
-                  accept="image/*"
-                  multiple
-                  chips
-                />
-              </v-card-text>
+      <v-btn
+        v-if="selectionMode"
+        prepend-icon="fa fa-download"
+        variant="flat"
+        color="orange"
+        size="small"
+        class="mr-2"
+        @click="downloadArrayFiles()"
+      >
+        Download
+      </v-btn>
+      <v-btn
+        v-if="photos.length"
+        prepend-icon="fas fa-check"
+        size="small"
+        :color="buttonSelected"
+        class="mr-2"
+        @click="toggleSelectionMode"
+      >
+        {{ selectBtnText }}
+      </v-btn>
+      <v-dialog
+        v-if="!isPhotographerGallery"
+        max-width="500"
+      >
+        <template #activator="{ props: activatorProps }">
+          <v-btn
+            v-bind="activatorProps"
+            prepend-icon="fas fa-plus"
+            size="small"
+            color="orange"
+          >
+            Upload
+          </v-btn>
+        </template>
+        <template #default="{ isActive }">
+          <v-card
+            title="Upload Photo"
+            color="black"
+          >
+            <template #append>
               <v-btn
-                text="Upload"
-                color="orange"
-                @click="uploadFile"
+                icon="fa fa-close"
+                variant="text"
+                size="smalls"
+                @click="isActive.value=false"
               />
-            </v-card>
-          </template>
-        </v-dialog>
-      </div>
+            </template>
+            <v-card-text>
+              <v-file-input
+                v-model="uploadArray"
+                label="Select Photo"
+                prepend-icon="fa-solid fa-camera"
+                variant="filled"
+                accept="image/*"
+                multiple
+                chips
+              />
+            </v-card-text>
+            <v-btn
+              text="Upload"
+              color="orange"
+              @click="uploadFile"
+            />
+          </v-card>
+        </template>
+      </v-dialog>
     </div>
     <v-container
       fluid
-      class="pa-4"
+      class="pb-6 pl-6 pr-6 pt-3"
     >
       <div v-if="!photos.length && !isLoading">
         <h3>
@@ -251,6 +260,7 @@ export default {
       buttonSelected: 'beige',
       downloadArray: [],
       isDownloaded: false,
+      selectBtnText: 'Select'
       // showDeleteDialog: false
     }
   },
@@ -316,11 +326,13 @@ export default {
       if (!this.selectionMode) {
         this.buttonSelected = 'orange';
         this.selectionMode = true;
+        this.selectBtnText = 'Clear Selection'
       }
       else {
         this.buttonSelected = 'beige';
         this.selectionMode = false;
         this.downloadArray = [];
+        this.selectBtnText = 'Select'
       }
     },
     openPreview(photo) {
@@ -371,7 +383,8 @@ export default {
         })
     },
     async downloadArrayFiles() {
-      if (this.downloadArray.length > 0) {
+      console.log(this.downloadArray.length)
+      if (this.downloadArray.length > 1) {
         this.isLoading = true;
         const zip = new JSZip();
         const imgFolder = zip.folder("WeWed");
@@ -393,6 +406,9 @@ export default {
           console.error("Error generating ZIP file:", error);
           alert("Failed to download photos.");
         }
+      }
+      else if (this.downloadArray.length == 1) {
+        this.downloadFile(this.downloadArray[0]);
       }
       else {
         alert('Please select a photo')
@@ -450,5 +466,13 @@ img {
 }
 .v-checkbox .v-selection-control {
   min-height: unset;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  background-color: black;
+  padding: 1rem;
+  z-index: 1;
 }
 </style>
