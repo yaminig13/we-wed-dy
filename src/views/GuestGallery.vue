@@ -79,7 +79,7 @@
                 label="Select Photo"
                 prepend-icon="fa-solid fa-camera"
                 variant="filled"
-                accept="image/*"
+                accept="image/*,video/*"
                 multiple
                 chips
               />
@@ -363,7 +363,6 @@ export default {
         this.isLoading = true;
         for (const file of this.uploadArray) {
           const storageRef = firebaseRef(storage, `${this.$route.name}/${this.linkValue}/${file.name}`);
-          console.log(storageRef)
           await uploadBytes(storageRef, file);
         }
         alert("Photos uploaded successfully!");
