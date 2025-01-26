@@ -79,7 +79,7 @@
                 label="Select Photo"
                 prepend-icon="fa-solid fa-camera"
                 variant="filled"
-                accept="image/*,video/*"
+                accept="image/*"
                 multiple
                 chips
               />
