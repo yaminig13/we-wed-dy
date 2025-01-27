@@ -32,3 +32,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
 To allow downloading when live, make changes to cors.json file and then follow the steps mentioned here https://medium.com/mindorks/getting-started-with-google-cloud-sdk-40e806c07460#:~:text=The%20first%20thing%20to%20do,into%20your%20google%20cloud%20account.
+
+gsutil cors set cors.json gs://we-wed.firebasestorage.app
+gsutil cors get cors.json gs://we-wed.firebasestorage.app
